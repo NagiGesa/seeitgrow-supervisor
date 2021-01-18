@@ -8,8 +8,13 @@ class FarmerRepo(private val farmerDao: FarmerDao) {
 
     var farmerDetails: LiveData<List<FarmerDetails>>?=null
 
-     fun readAllFarmerByGroupId(groupId: String):  LiveData<List<FarmerDetails>>? {
-        farmerDetails = farmerDao.getAllFarmerDetailsByFarmerId(groupId)
+     fun readAllFarmerByGroupId():  LiveData<List<FarmerDetails>>? {
+        farmerDetails = farmerDao.getAllFarmerDetailsByFarmerId()
+        return farmerDetails
+    }
+
+    fun readAllSubFarmerByGroupId(championId : String):  LiveData<List<FarmerDetails>>? {
+        farmerDetails = farmerDao.getAllSubFarmerId(championId)
         return farmerDetails
     }
 

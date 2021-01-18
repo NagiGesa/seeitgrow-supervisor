@@ -1,10 +1,10 @@
 package com.seeitgrow.supervisor.ui.main.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.constraintlayout.widget.Placeholder
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -12,6 +12,7 @@ import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.databinding.ItemLayoutBinding
 import com.seeitgrow.supervisor.ui.main.adapter.MainAdapter.DataViewHolder
+import com.seeitgrow.supervisor.ui.main.view.ChampionList
 
 
 class MainAdapter(private val users: List<FarmerDetails>, mContext: Context) :
@@ -31,14 +32,20 @@ class MainAdapter(private val users: List<FarmerDetails>, mContext: Context) :
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
         val Far = users[position]
 
-        binding.textViewUserName.text = Far.FirstName
+        binding.txtChampionName.text = Far.FirstName
 
-        binding.imageViewAvatar.load(let {
+        binding.txtPendingCount.text = Far.TotalPendingImage
+
+        binding.imgFarmerImage.load(let {
             "http://52.183.134.41/PBINSURANCE/Pictures/2020/HR/Rabi2020/Sites/L51114F00964C05S00946Ip.jpg"
         }) {
             crossfade(true)
             placeholder(R.drawable.ronaldo)
             transformations(CircleCropTransformation())
+        }
+
+        holder.itemView.setOnClickListener {
+            val details = users[holder.adapterPosition]
         }
     }
 

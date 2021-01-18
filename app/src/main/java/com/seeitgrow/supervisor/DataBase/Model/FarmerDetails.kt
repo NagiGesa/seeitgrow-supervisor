@@ -9,149 +9,116 @@ data class FarmerDetails(
     @PrimaryKey(autoGenerate = true)
     val id: Int,
     var WeatherStation: String? = null,
-    val IsCABIFarmer: String? = null,
-    val IsGroupFarmer: String? = null,
-    val ModifiedOn: String? = null,
-    val SubCountyOthers: String? = null,
-    val SeasonDetails: String? = null,
-    val CountyId: String? = null,
-    val Gender: String? = null,
-    val GroupFarmerName: String? = null,
-    val Farmer_photographPath: String? = null,
-    val Crop: String? = null,
-    val TotalHectares: String? = null,
-    val InsuredCrop: String? = null,
-    val Education: String? = null,
-    val DOB: String? = null,
-    val ContactNumber: String? = null,
-    val VillageOthers: String? = null,
-    val EducationId: String? = null,
-    val CountyOthers: String? = null,
-    val VillageName: String? = null,
-    val Ward: String? = null,
-    val SeasonCode: String? = null,
-    val Country: String? = null,
-    val CreatedDateTime: String? = null,
-    val RegistrationDocumentId: String? = null,
-    val PromoCode: String? = null,
 
+    var IsCABIFarmer: String? = null,
 
-    val IsActive: String? =
-        null,
+    var IsGroupFarmer: String? = null,
 
+    var ModifiedOn: String? = null,
 
-    val ModifiedDateTime: String? =
-        null,
+    var SubCountyOthers: String? = null,
 
+    var SeasonDetails: String? = null,
 
-    val ChampionUniqueCode: String? =
-        null,
+    var CountyId: String? = null,
 
+    var Gender: String? = null,
 
-    val County: String? =
-        null,
+    var GroupFarmerName: String? = null,
 
+    var Farmer_photographPath: String? = null,
 
-    val SubCountyId: String? =
-        null,
+    var Crop: String? = null,
 
+    var TotalHectares: String? = null,
 
-    val Language: String? =
-        null,
+    var InsuredCrop: String? = null,
 
+    var Education: String? = null,
 
-    val WardId: String? =
-        null,
+    var DOB: String? = null,
 
+    var ContactNumber: String? = null,
 
-    val Ethinicity: String? =
-        null,
+    var VillageOthers: String? = null,
 
+    var EducationId: String? = null,
 
-    val MainPhoneNumber: String? =
-        null,
+    var CountyOthers: String? = null,
 
+    var VillageName: String? = null,
 
-    val FarmerID: String? =
-        null,
+    var Ward: String? = null,
 
+    var SeasonCode: String? = null,
 
-    val CreatedOn: String? =
-        null,
+    var Country: String? = null,
 
+    var CreatedDateTime: String? = null,
 
-    val FarmerUniqueCode: String? =
-        null,
+    var RegistrationDocumentId: String? = null,
 
+    var PromoCode: String? = null,
 
-    val ApkVersion: String? =
-        null,
+    var IsActive: String? = null,
 
+    var ModifiedDateTime: String? = null,
 
-    val Age: String? =
-        null,
+    var ChampionUniqueCode: String? = null,
 
+    var TotalPendingImage: String? = null,
 
-    val Password: String? =
-        null,
+    var County: String? = null,
 
+    var SubCountyId: String? = null,
 
-    val ResultStatus: String? =
-        null,
+    var Language: String? = null,
 
+    var WardId: String? = null,
 
-    val WardOthers: String? =
-        null,
+    var Ethinicity: String? = null,
 
+    var MainPhoneNumber: String? = null,
 
-    val FirstName: String? =
-        null,
+    var FarmerID: String? = null,
 
+    var CreatedOn: String? = null,
 
-    val Error: String? =
-        null,
+    var FarmerUniqueCode: String? = null,
 
+    var ApkVersion: String? = null,
 
-    val SubCounty: String? =
-        null,
+    var Age: String? = null,
 
+    var Password: String? = null,
 
-    val IMEI: String? =
-        null,
+    var ResultStatus: String? = null,
 
+    var WardOthers: String? = null,
 
-    val CropsAdvisoryEnroll: String? =
-        null,
+    var FirstName: String? = null,
 
+    var Error: String? = null,
 
-    val VillageID: String? =
-        null,
+    var SubCounty: String? = null,
 
+    var IMEI: String? = null,
 
-    val Username: String? =
-        null,
+    var CropsAdvisoryEnroll: String? = null,
 
+    var VillageID: String? = null,
 
-    val GroupFarmerId: String? =
-        null,
+    var Username: String? = null,
 
+    var GroupFarmerId: String? = null,
 
-    val FarmingExperience: String? =
-        null,
+    var FarmingExperience: String? = null,
 
+    var DueDayRange: String? = null,
 
-    val DueDayRange: String? =
-        null,
+    var LanguageId: String? = null,
 
+    var FatherName: String? = null,
 
-    val LanguageId: String? =
-        null,
-
-
-    val FatherName: String? =
-        null,
-
-
-    val RegistrationDocImagePath: String?? =
-        null,
+    var RegistrationDocImagePath: String? = null,
 )

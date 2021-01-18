@@ -14,6 +14,8 @@ class FarmerViewModel(application: Application) : AndroidViewModel(application) 
 
     val readAllFarmerByGroupId: LiveData<List<FarmerDetails>>? = null
 
+    val readAllSubFarmerByChampoionId: LiveData<List<FarmerDetails>>? = null
+
     private val repository: FarmerRepo
 
     init {
@@ -23,8 +25,11 @@ class FarmerViewModel(application: Application) : AndroidViewModel(application) 
 
     }
 
-     fun readAllFarmerByGroupId(groupId: String): LiveData<List<FarmerDetails>>? =
-        repository.readAllFarmerByGroupId(groupId)
+     fun readAllFarmerByGroupId(): LiveData<List<FarmerDetails>>? =
+        repository.readAllFarmerByGroupId()
+
+    fun readAllSubFarmerByGroupId(championId : String): LiveData<List<FarmerDetails>>? =
+        repository.readAllSubFarmerByGroupId(championId)
 
 
     fun addUser(user: List<FarmerDetails>) {

@@ -5,14 +5,14 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.seeitgrow.supervisor.DataBase.Dao.FarmerDao
-import com.seeitgrow.supervisor.DataBase.Dao.UserDao
+import com.seeitgrow.supervisor.DataBase.Dao.Supervisor_Dao
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
-import com.seeitgrow.supervisor.DataBase.Model.User
+import com.seeitgrow.supervisor.DataBase.Model.SupervisorDetails
 
-@Database(entities = [User::class,FarmerDetails::class], version = 2, exportSchema = false)
+@Database(entities = [SupervisorDetails::class,FarmerDetails::class], version = 1, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
 
-    abstract fun userDao(): UserDao
+    abstract fun superVisorDao(): Supervisor_Dao
 
     abstract fun farmerDao(): FarmerDao
 

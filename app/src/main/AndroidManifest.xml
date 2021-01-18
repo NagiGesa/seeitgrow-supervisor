@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.seeitgrow.supervisor">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,11 +17,12 @@
 
 
     <application
-        android:allowBackup="true"
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        tools:replace="android:allowBackup"
         android:theme="@style/Theme.Supervisor"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.main.view.SplashScreen.Splash">
@@ -37,7 +39,13 @@
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
 
         <activity
-            android:name=".ui.main.view.MainActivity"
+            android:name=".ui.main.view.ChampionList"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
+
+        <activity
+            android:name=".ui.main.view.SubFarmerList"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>

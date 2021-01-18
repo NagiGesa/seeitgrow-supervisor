@@ -4,41 +4,46 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
-import com.seeitgrow.supervisor.DataBase.UserDatabase
+import com.seeitgrow.supervisor.DataBase.Model.SupervisorDetails
 import com.seeitgrow.supervisor.DataBase.Repository.UserRepository
-import com.seeitgrow.supervisor.DataBase.Model.User
+import com.seeitgrow.supervisor.DataBase.UserDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class UserViewModel(application: Application) : AndroidViewModel(application) {
+class Supervidor_ViewModel(application: Application) : AndroidViewModel(application) {
 
-    val readAllData: LiveData<List<User>>
+    val readAllData: LiveData<List<SupervisorDetails>>
+
+    val getSupervisorCount: LiveData<Integer>
 
     private val repository: UserRepository
 
     init {
-        val userDao = UserDatabase.getDatabase(application).userDao()
+        val userDao = UserDatabase.getDatabase(application).superVisorDao()
         repository = UserRepository(userDao)
 
         readAllData = repository.readAllData
 
+        getSupervisorCount = repository.getCount
+
+
     }
 
-    fun addUser(user: User) {
+    fun addUser(SupervisorDetails: List<SupervisorDetails>) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.adduser(user)
+            repository.adduser(SupervisorDetails)
         }
     }
 
-    fun updateUser(user: User) {
+    fun updateUser(SupervisorDetails: SupervisorDetails) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.updateUser(user)
+            repository.updateUser(SupervisorDetails)
         }
     }
 
-    fun deleteUser(user: User) {
+    fun deleteUser(SupervisorDetails: SupervisorDetails) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.delete(user)
+            repository.delete(SupervisorDetails)
         }
     }
 

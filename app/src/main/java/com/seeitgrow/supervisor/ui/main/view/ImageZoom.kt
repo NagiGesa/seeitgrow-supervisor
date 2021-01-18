@@ -1,11 +1,16 @@
 package com.seeitgrow.supervisor.ui.main.view
 
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.view.MotionEvent
 import android.view.ScaleGestureDetector
 import android.widget.ImageView
+import androidx.annotation.Nullable
 import androidx.appcompat.app.AppCompatActivity
 import coil.load
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.databinding.ImageZoomBinding
 import kotlin.math.max
@@ -23,9 +28,20 @@ class ImageZoom : AppCompatActivity() {
         binding = ImageZoomBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.imageView.load(R.drawable.ronaldo)
+        binding.imageGlide.load(R.drawable.ronaldo)
 
-        scaleGestureDetector = ScaleGestureDetector(this, ScaleListener())
+
+//        Glide.with(this)
+//            .load(R.drawable.ronaldo)
+//            .into(object : CustomTarget<Drawable?>() {
+//                override fun onResourceReady(resource: Drawable, transition: Transition<in Drawable?>?) {
+//                    binding.imageGlide.setImageDrawable(resource)
+//                }
+//
+//                override fun onLoadCleared(@Nullable placeholder: Drawable?) = Unit
+//
+//            })
+
 
     }
 
@@ -34,13 +50,5 @@ class ImageZoom : AppCompatActivity() {
         return true
     }
 
-    private inner class ScaleListener : ScaleGestureDetector.SimpleOnScaleGestureListener() {
-        override fun onScale(scaleGestureDetector: ScaleGestureDetector): Boolean {
-            scaleFactor *= scaleGestureDetector.scaleFactor
-            scaleFactor = max(0.1f, min(scaleFactor, 10.0f))
-            binding.imageView.scaleX = scaleFactor
-            binding.imageView.scaleY = scaleFactor
-            return true
-        }
-    }
+
 }

@@ -13,6 +13,9 @@ interface FarmerDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insertFarmerDetails(farmerDetails: List<FarmerDetails>)
 
-    @Query("SELECT * from farmer_table where GroupFarmerId = :groupId ")
-     fun getAllFarmerDetailsByFarmerId(groupId :String?) : LiveData<List<FarmerDetails>>
+    @Query("SELECT * from farmer_table where  IsGroupFarmer = '1' ")
+     fun getAllFarmerDetailsByFarmerId() : LiveData<List<FarmerDetails>>
+
+    @Query("SELECT * from farmer_table where GroupFarmerId = :groupId")
+    fun getAllSubFarmerId(groupId :String?) : LiveData<List<FarmerDetails>>
 }
