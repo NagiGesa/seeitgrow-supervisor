@@ -13,7 +13,7 @@ class MainViewModel(private val mainRepository: MainRepository) : ViewModel() {
     fun getUsers(nu : String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
-            emit(Resource.success(data = mainRepository.getUsers(nu)))
+            emit(Resource.success(data = mainRepository.getUsers("2","SR2020")))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }

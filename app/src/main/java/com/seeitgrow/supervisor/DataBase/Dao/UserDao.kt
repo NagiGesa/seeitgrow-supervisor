@@ -1,8 +1,8 @@
-package com.seeitgrow.supervisor.DataBase
+package com.seeitgrow.supervisor.DataBase.Dao
 
 import androidx.lifecycle.LiveData
 import androidx.room.*
-import com.seeitgrow.supervisor.DataBase.User
+import com.seeitgrow.supervisor.DataBase.Model.User
 
 @Dao
 interface UserDao {

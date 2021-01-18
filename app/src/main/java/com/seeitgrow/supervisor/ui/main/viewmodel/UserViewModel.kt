@@ -5,8 +5,8 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.viewModelScope
 import com.seeitgrow.supervisor.DataBase.UserDatabase
-import com.seeitgrow.supervisor.DataBase.UserRepository
-import com.seeitgrow.supervisor.DataBase.User
+import com.seeitgrow.supervisor.DataBase.Repository.UserRepository
+import com.seeitgrow.supervisor.DataBase.Model.User
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 

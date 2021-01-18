@@ -1,14 +1,15 @@
 package com.seeitgrow.supervisor.data.api
 
-import com.seeitgrow.supervisor.DataBase.User
+import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface ApiService {
 
-    @GET("GetCustomerDetailsByPhoneNumber.php")
+    @GET("GetFarmerDetailsByGroupFarmerId")
     suspend fun getUsers(
-        @Query("phoneNumber") number: String
-    ): User
+        @Query("GroupFarmerId") number: String,
+        @Query("SeasonCode") seasonCode: String
+    ): List<FarmerDetails>
 
 }

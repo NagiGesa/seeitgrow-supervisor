@@ -1,4 +1,4 @@
-package com.seeitgrow.supervisor.DataBase
+package com.seeitgrow.supervisor.DataBase.Model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

@@ -5,7 +5,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitBuilder {
 
-    private const val BASE_URL = "http://13.233.85.98/Troop/Common/"
+    private const val BASE_URL = "http://40.123.251.25/SeeitgrowAPIV2/api/KNAPK/"
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()

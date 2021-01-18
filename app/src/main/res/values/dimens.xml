@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+MIT License
+
+Copyright (c) 2017 Donato Rimenti
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+-->
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="text_margin">16dp</dimen>
+    <dimen name="text_margin_nested">26dp</dimen>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="nav_header_vertical_spacing">8dp</dimen>
+    <dimen name="nav_header_height">186dp</dimen>
+    <dimen name="padding_10">10dp</dimen>
+    <dimen name="button_size">48dp</dimen>
+    <dimen name="card_stroke_width">2dp</dimen>
+    <dimen name="content_width">260dp</dimen>
+    <dimen name="button_text_size">16sp</dimen>
+    <dimen name="progress_text_size_small">12sp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
+    <dimen name="margin_small">8dp</dimen>
+    <dimen name="margin">16dp</dimen>
+    <dimen name="padding_small">8dp</dimen>
+    <dimen name="padding">16dp</dimen>
+    <dimen name="padding_large">24dp</dimen>
+
+
+    <dimen name="margin_1">1dp</dimen>
+    <dimen name="margin_2">2dp</dimen>
+    <dimen name="margin_3">3dp</dimen>
+    <dimen name="margin_4">4dp</dimen>
+    <dimen name="margin_5">5dp</dimen>
+    <dimen name="margin_8">8dp</dimen>
+    <dimen name="margin_10">10dp</dimen>
+    <dimen name="margin_14">14dp</dimen>
+    <dimen name="margin_15">15dp</dimen>
+    <dimen name="margin_16">16dp</dimen>
+    <dimen name="margin_20">20dp</dimen>
+    <dimen name="margin_24">24dp</dimen>
+    <dimen name="margin_25">25dp</dimen>
+    <dimen name="margin_27">27dp</dimen>
+    <dimen name="margin_30">30dp</dimen>
+    <dimen name="margin_35">35dp</dimen>
+    <dimen name="margin_40">40dp</dimen>
+    <dimen name="margin_45">45dp</dimen>
+    <dimen name="margin_50">50dp</dimen>
+    <dimen name="margin_55">55dp</dimen>
+    <dimen name="margin_60">60dp</dimen>
+    <dimen name="margin_65">65dp</dimen>
+    <dimen name="margin_70">70dp</dimen>
+    <dimen name="margin_80">80dp</dimen>
+    <dimen name="margin_90">90dp</dimen>
+    <dimen name="margin_100">100dp</dimen>
+    <dimen name="margin_110">110dp</dimen>
+    <dimen name="margin_120">120dp</dimen>
+    <dimen name="margin_150">150dp</dimen>
+    <dimen name="margin_175">175dp</dimen>
+    <dimen name="margin_200">200dp</dimen>
+
+    <dimen name="textSize_32">32sp</dimen>
+    <dimen name="textSize_30">30sp</dimen>
+    <dimen name="textSize_28">28sp</dimen>
+    <dimen name="textSize_26">26sp</dimen>
+    <dimen name="textSize_24">24sp</dimen>
+    <dimen name="textSize_22">22sp</dimen>
+    <dimen name="textSize_20">20sp</dimen>
+    <dimen name="textSize_19">19sp</dimen>
+    <dimen name="textSize_18">18sp</dimen>
+    <dimen name="textSize_17">17sp</dimen>
+    <dimen name="textSize_16">16sp</dimen>
+    <dimen name="textSize_15">15sp</dimen>
+    <dimen name="textSize_14">14sp</dimen>
+    <dimen name="textSize_13">13sp</dimen>
+    <dimen name="textSize_12">12sp</dimen>
+    <dimen name="textSize_11">11sp</dimen>
+    <dimen name="textSize_10">10sp</dimen>
+
+
+</resources>

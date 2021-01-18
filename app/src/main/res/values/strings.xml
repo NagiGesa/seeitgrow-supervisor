@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Supervisor</string>
+
+    <string name="phoneNumber">Phone Number</string>
+    <string name="signin">Sign In</string>
+    <string name="forgotpassword">Forgot password</string>
 </resources>

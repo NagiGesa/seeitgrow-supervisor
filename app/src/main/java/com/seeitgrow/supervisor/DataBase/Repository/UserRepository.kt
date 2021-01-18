@@ -1,6 +1,8 @@
-package com.seeitgrow.supervisor.DataBase
+package com.seeitgrow.supervisor.DataBase.Repository
 
 import androidx.lifecycle.LiveData
+import com.seeitgrow.supervisor.DataBase.Dao.UserDao
+import com.seeitgrow.supervisor.DataBase.Model.User
 
 class UserRepository(private val userDao: UserDao) {
 
