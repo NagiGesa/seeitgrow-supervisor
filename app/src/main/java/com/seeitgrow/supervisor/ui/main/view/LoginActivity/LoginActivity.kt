@@ -15,7 +15,8 @@ import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.MainViewModel
-import com.seeitgrow.supervisor.ui.main.viewmodel.Supervidor_ViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.AppUtils.SEASON_CODE
 import com.seeitgrow.supervisor.utils.NetworkUtil
@@ -26,8 +27,9 @@ class LoginActivity : AppCompatActivity() {
 
     lateinit var _binding: SignupLoginBinding
     private lateinit var viewModel: MainViewModel
-    private lateinit var mSupervidorViewModel: Supervidor_ViewModel
+    private lateinit var mSupervisorViewModel: Supervisor_ViewModel
     private lateinit var mfarmerviewModel: FarmerViewModel
+    private lateinit var rejectedViewModel: RejectedViewModel
     private lateinit var progessDialog: ProgressDialog
     private var SupervisorId: String? = null
 
@@ -67,8 +69,9 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun Loadui() {
-        mSupervidorViewModel = ViewModelProvider(this).get(Supervidor_ViewModel::class.java)
+        mSupervisorViewModel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
         mfarmerviewModel = ViewModelProvider(this).get(FarmerViewModel::class.java)
+        rejectedViewModel = ViewModelProvider(this).get(RejectedViewModel::class.java)
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
@@ -90,8 +93,9 @@ class LoginActivity : AppCompatActivity() {
                                         AppUtils.showMessage(this, users[0].Error.toString())
                                     } else {
                                         SupervisorId = users[0].SupervisorId
-                                        SharedPrefManager.getInstance(applicationContext).saveSupervisorId(SupervisorId!!)
-                                        mSupervidorViewModel.addUser(users)
+                                        SharedPrefManager.getInstance(applicationContext)
+                                            .saveSupervisorId(SupervisorId!!)
+                                        mSupervisorViewModel.addUser(users)
                                         getFarmerDetails()
 
                                     }
@@ -121,8 +125,32 @@ class LoginActivity : AppCompatActivity() {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
-                            progessDialog.dismiss()
+//                            progessDialog.dismiss()
                             resource.data?.let { it1 -> mfarmerviewModel.addUser(it1) }
+                            getRejectedMessage()
+//                            startActivity(Intent(this, ChampionList::class.java))
+                        }
+                        Status.ERROR -> {
+                            progessDialog.dismiss()
+                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                        }
+                        Status.LOADING -> {
+
+                        }
+                    }
+                }
+            })
+        }
+    }
+
+    private fun getRejectedMessage() {
+        SupervisorId?.let { it ->
+            viewModel.getRejectedStatus(SEASON_CODE).observe(this, Observer {
+                it?.let { resource ->
+                    when (resource.status) {
+                        Status.SUCCESS -> {
+                            progessDialog.dismiss()
+                            resource.data?.let { it1 -> rejectedViewModel.addRejectedMessage(it1) }
                             startActivity(Intent(this, ChampionList::class.java))
                         }
                         Status.ERROR -> {
@@ -137,6 +165,7 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
+
 
     override fun onSupportNavigateUp(): Boolean {
         onBackPressed()

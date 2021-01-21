@@ -20,10 +20,49 @@ class MainViewModel(private val apiRepository: ApiRepository) : ViewModel() {
     }
 
 
+    fun getChampionList(supervisorId : String, seasonCode : String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = apiRepository.getChampionList(supervisorId,seasonCode)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
+
+    fun getSubFarmerList(championId : String, seasonCode : String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = apiRepository.getSubFarmerList(championId,seasonCode)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
+
+
     fun getSupervisorDetails(mobileNumber : String, seasonCode : String) = liveData(Dispatchers.IO) {
         emit(Resource.loading(data = null))
         try {
             emit(Resource.success(data = apiRepository.getSupervisorDetails(mobileNumber,seasonCode)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
+
+
+    fun getPendingSiteList(farmerId : String, seasonCode : String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = apiRepository.getPendingSiteList(farmerId,seasonCode)))
+        } catch (exception: Exception) {
+            emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
+        }
+    }
+
+
+    fun getRejectedStatus(seasonCode : String) = liveData(Dispatchers.IO) {
+        emit(Resource.loading(data = null))
+        try {
+            emit(Resource.success(data = apiRepository.getRejectedMessage(seasonCode)))
         } catch (exception: Exception) {
             emit(Resource.error(data = null, message = exception.message ?: "Error Occurred!"))
         }

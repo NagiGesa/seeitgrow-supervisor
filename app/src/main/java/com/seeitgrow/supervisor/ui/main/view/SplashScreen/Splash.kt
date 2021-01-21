@@ -10,12 +10,12 @@ import androidx.lifecycle.ViewModelProvider
 import com.seeitgrow.supervisor.databinding.SplashScreenBinding
 import com.seeitgrow.supervisor.ui.main.view.LoginActivity.LoginActivity
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
-import com.seeitgrow.supervisor.ui.main.viewmodel.Supervidor_ViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 
 @Suppress("DEPRECATION")
 class Splash : AppCompatActivity() {
     lateinit var binding: SplashScreenBinding
-    private lateinit var supervidorViewmodel: Supervidor_ViewModel
+    private lateinit var supervisorViewmodel: Supervisor_ViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,13 +33,13 @@ class Splash : AppCompatActivity() {
     }
 
     private fun Loadui() {
-        supervidorViewmodel = ViewModelProvider(this).get(Supervidor_ViewModel::class.java)
+        supervisorViewmodel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
     }
 
     override fun onStart() {
         super.onStart()
         Handler().postDelayed({
-            supervidorViewmodel.getSupervisorCount.observe(this, Observer { count ->
+            supervisorViewmodel.getSupervisorCount.observe(this, Observer { count ->
                 if (count > 0) {
                     startActivity(Intent(this, ChampionList::class.java))
                 } else {

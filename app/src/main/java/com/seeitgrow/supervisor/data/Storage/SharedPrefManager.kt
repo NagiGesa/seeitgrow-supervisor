@@ -31,6 +31,22 @@ class SharedPrefManager private constructor(private val mCtx: Context) {
 
     }
 
+
+
+    val getSiteDetail: String?
+        get() {
+            val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+            return sharedPreferences.getString("siteDetail",null)
+        }
+
+    fun saveSiteId(superId: String) {
+        val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString("siteDetail", superId)
+        editor.apply()
+
+    }
+
     fun clear() {
         val sharedPreferences = mCtx.getSharedPreferences(SHARED_PREF_NAME, Context.MODE_PRIVATE)
         val editor = sharedPreferences.edit()

@@ -10,7 +10,7 @@ import com.seeitgrow.supervisor.DataBase.UserDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class Supervidor_ViewModel(application: Application) : AndroidViewModel(application) {
+class Supervisor_ViewModel(application: Application) : AndroidViewModel(application) {
 
     val readAllData: LiveData<List<SupervisorDetails>>
 
