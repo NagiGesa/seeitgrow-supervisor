@@ -1,6 +1,7 @@
 package com.seeitgrow.supervisor.ui.main.view.SiteDetails
 
 import android.annotation.SuppressLint
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.*
@@ -44,6 +45,10 @@ class SiteInitialApprove : AppCompatActivity() {
         _binding.btnReject.setOnClickListener {
             OpenRejectedPopUp()
         }
+
+        _binding.btnAccept.setOnClickListener {
+            AcceptPopUp()
+        }
     }
 
     private fun OpenRejectedPopUp() {
@@ -54,6 +59,7 @@ class SiteInitialApprove : AppCompatActivity() {
         dialogBuilder.setView(dialogView)
         val auto_reject: AutoCompleteTextView = dialogView.findViewById(R.id.auto_reject)
         val img_close: LinearLayout = dialogView.findViewById(R.id.img_close)
+        val btn_reject: Button = dialogView.findViewById(R.id.btn_reject)
 
 
         val adapter: ArrayAdapter<String> =
@@ -67,7 +73,14 @@ class SiteInitialApprove : AppCompatActivity() {
                 val auto_reject: String = RejectedArray.get(position)
 
             }
+
         val alertDialog: AlertDialog = dialogBuilder.create()
+        btn_reject.setOnClickListener { v: View? ->
+            run {
+                alertDialog.dismiss()
+                RejectPopUp()
+            }
+        }
         img_close.setOnClickListener { v: View? -> alertDialog.dismiss() }
         alertDialog.show()
     }
@@ -111,6 +124,40 @@ class SiteInitialApprove : AppCompatActivity() {
             crossfade(true)
 
         }
+    }
+
+    private fun RejectPopUp() {
+        val dialogClickListener =
+            DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
+            }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sure you want to Reject Site")
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+            .setNegativeButton("No", dialogClickListener).show()
+    }
+
+    private fun AcceptPopUp() {
+        val dialogClickListener =
+            DialogInterface.OnClickListener { dialog, which ->
+                when (which) {
+                    DialogInterface.BUTTON_POSITIVE -> {
+                    }
+                    DialogInterface.BUTTON_NEGATIVE -> {
+                    }
+                }
+            }
+
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Sure you want to Accept Site")
+        builder.setMessage("Are you sure?").setPositiveButton("Yes", dialogClickListener)
+            .setNegativeButton("No", dialogClickListener).show()
     }
 
     private fun OpenImage() {
