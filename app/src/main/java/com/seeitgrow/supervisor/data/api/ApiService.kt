@@ -24,14 +24,14 @@ interface ApiService {
     ): List<SupervisorDetails>
 
 
-    @GET("CABIGetChampionListBySupervisorId")
+    @GET("CABIGetPendingChampionSiteList")
     suspend fun getChampionLIst(
         @Query("SupervisorId") number: String,
         @Query("SeasonCode") seasonCode: String
     ): List<FarmerDetails>
 
 
-    @GET("CABIGetFarmerDetailsByGroupFarmerId")
+    @GET("CABIGetPendingFarmerSiteListByGroupFarmerId")
     suspend fun getSubFarmerList(
         @Query("GroupFarmerId") number: String,
         @Query("SeasonCode") seasonCode: String

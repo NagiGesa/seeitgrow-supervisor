@@ -35,7 +35,7 @@ class SubFarmerAdaptor(private val users: List<FarmerDetails>, private val mCont
 
         binding.txtChampionName.text = Far.FirstName
 
-        binding.txtPendingCount.text = Far.TotalPendingImage
+        binding.txtPendingCount.text =  "Pending Count: " +Far.TotalPendingImage
 
         binding.imgFarmerImage.load(let {
             "http://52.183.134.41/PBINSURANCE/Pictures/2020/HR/Rabi2020/Sites/L51114F00964C05S00946Ip.jpg"

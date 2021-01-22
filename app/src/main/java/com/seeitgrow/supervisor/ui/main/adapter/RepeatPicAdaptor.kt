@@ -67,7 +67,7 @@ class RepeatPicAdaptor(
         val long = SiteDetail.InitialLongitude
         if (lat != null && long != null) {
             binding.txtLocation.text =
-                SiteDetail.InitialLatitude.toString() + " , " + SiteDetail.InitialLongitude.toString()
+                SiteDetail.RepeatLatitude.toString() + " , " + SiteDetail.RepeatLatitude.toString()
         }
         binding.txtSiteCreated.text =
             "CreatedOn : " + SiteDetail.RepeatCreatedOn.toString().substring(0, 10)

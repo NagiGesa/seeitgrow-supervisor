@@ -1,12 +1,14 @@
 package com.seeitgrow.supervisor.ui.main.view
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
@@ -14,7 +16,6 @@ import com.seeitgrow.supervisor.databinding.ActivityMainBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.ChampionAdaptor
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
@@ -125,8 +126,19 @@ class ChampionList : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startMain)
         return true
     }
 
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startMain)
+        finish()
+    }
 }
