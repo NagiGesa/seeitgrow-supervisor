@@ -12,6 +12,12 @@ class ApiHelper(private val apiService: ApiService) {
 
     suspend fun getPendingSiteList(farmerId: String, seasonCode: String) = apiService.getPendingSite(farmerId, seasonCode)
 
+    suspend fun getPendingSiteImage(siteId: String, seasonCode: String) = apiService.getPendingSiteImage(siteId, seasonCode)
+
     suspend fun getRejectedMessage(seasonCode: String) = apiService.getRejectedMessage(seasonCode)
+
+    suspend fun updateInitialSatus(SiteId: String,isApproved: String, isApproverId :String,approveComment : String ) = apiService.updateInitialPictureStatus(SiteId,isApproved,isApproverId,approveComment)
+
+    suspend fun updateRepeatPictureStatus(SiteId: String,Status: String,uniqueId:String, isApproverId :String,approveComment : String ) = apiService.updateRepeatPictureStatus(SiteId,Status,uniqueId,isApproverId,approveComment)
 
 }

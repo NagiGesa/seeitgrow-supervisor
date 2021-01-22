@@ -53,6 +53,7 @@ class SubFarmerAdaptor(private val users: List<FarmerDetails>, private val mCont
                 val details = users[holder.adapterPosition]
                 val intent = Intent(mContext, SiteList_Activity::class.java)
                 intent.putExtra(AppUtils.FARMER_ID, details.FarmerID)
+                intent.putExtra(AppUtils.FARMER_NAME, details.FirstName)
                 mContext.startActivity(intent)
             } else {
                 AppUtils.showMessage(mContext, "Not connected to Internet")

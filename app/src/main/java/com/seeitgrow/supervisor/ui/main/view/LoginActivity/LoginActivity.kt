@@ -14,7 +14,7 @@ import com.seeitgrow.supervisor.databinding.SignupLoginBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.ui.main.viewmodel.MainViewModel
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils

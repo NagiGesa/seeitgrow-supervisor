@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.repository.ApiRepository
-import com.seeitgrow.supervisor.ui.main.viewmodel.MainViewModel
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 
 class ViewModelFactory(private val apiHelper: ApiHelper) : ViewModelProvider.Factory {
 

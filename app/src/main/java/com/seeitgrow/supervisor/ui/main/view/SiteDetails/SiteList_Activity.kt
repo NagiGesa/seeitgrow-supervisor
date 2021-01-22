@@ -7,12 +7,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seeitgrow.supervisor.Model.SiteListResponse
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.SitelistBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SiteListAdaptor
-import com.seeitgrow.supervisor.ui.main.viewmodel.MainViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.Status
 
@@ -22,6 +22,7 @@ class SiteList_Activity : AppCompatActivity() {
     private lateinit var viewModel: MainViewModel
     private lateinit var progessDialog: ProgressDialog
     private lateinit var championId: String
+    private lateinit var farmerName: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -41,12 +42,14 @@ class SiteList_Activity : AppCompatActivity() {
 
     private fun LoadUi() {
         championId = intent.getStringExtra(AppUtils.FARMER_ID)!!
+        farmerName = intent.getStringExtra(AppUtils.FARMER_NAME)!!
+        _binding.txtTitle.text = farmerName
         viewModel = ViewModelProvider(
             this,
             ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         ).get(MainViewModel::class.java)
 
-        getPendingSiteList(championId)
+
     }
 
 
@@ -89,4 +92,17 @@ class SiteList_Activity : AppCompatActivity() {
         _binding.recySite.layoutManager = LinearLayoutManager(this)
         adapter.notifyDataSetChanged()
     }
+
+    override fun onSupportNavigateUp(): Boolean {
+        onBackPressed()
+        return true
+    }
+
+    override fun onStart() {
+        super.onStart()
+        getPendingSiteList(championId)
+
+    }
+
+
 }

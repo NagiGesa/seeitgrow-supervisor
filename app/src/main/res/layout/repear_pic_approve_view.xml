@@ -1,0 +1,105 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_10"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+           android:layout_marginRight="@dimen/margin_10"
+            android:layout_marginLeft="@dimen/margin_10"
+            android:orientation="vertical">
+
+
+            <TextView
+                android:id="@+id/txt_site_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow"
+                android:gravity="center_vertical"
+                android:scaleType="fitXY"
+                android:text="Site name"
+                android:textColor="@color/black"
+                android:textSize="@dimen/margin_20" />
+
+
+            <ImageView
+                android:id="@+id/img_site"
+                android:layout_width="match_parent"
+                android:layout_height="200sp"
+                android:layout_gravity="center"
+                android:layout_marginTop="10sp"
+                android:adjustViewBounds="true"
+                android:padding="5sp"
+                android:scaleType="fitXY"
+                android:src="@drawable/wheatfield1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin_10">
+
+                <ImageView
+                    android:layout_width="@dimen/margin_30"
+                    android:layout_height="@dimen/margin_30"
+                    android:src="@drawable/ic_location" />
+
+                <TextView
+                    android:id="@+id/txt_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/barlow"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/textSize_18" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/txt_site_created"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/barlow"
+                android:textColor="@color/black"
+                android:textSize="@dimen/textSize_18" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="2">
+
+                <Button
+                    android:id="@+id/btn_reject"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/rejectedred"
+                    android:text="Reject"
+                    android:textColor="@color/white"
+                    app:backgroundTint="@color/rejectedred">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/btn_accept"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/margin_10"
+                    android:layout_weight="1"
+                    android:backgroundTint="@color/white"
+                    android:text="Accept"
+                    app:backgroundTint="@color/white">
+
+                </Button>
+            </LinearLayout>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</RelativeLayout>

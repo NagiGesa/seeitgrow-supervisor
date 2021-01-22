@@ -57,6 +57,11 @@
             android:name=".ui.main.view.SiteDetails.SiteInitialApprove"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
+
+        <activity
+            android:name=".ui.main.view.SiteDetails.RepeatPic_Approve"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustResize" />
     </application>
 
 </manifest>
