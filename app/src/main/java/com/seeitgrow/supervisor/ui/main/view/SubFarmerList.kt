@@ -3,6 +3,7 @@ package com.seeitgrow.supervisor.ui.main.view
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -15,18 +16,24 @@ import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SubFarmerAdaptor
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class SubFarmerList : AppCompatActivity() {
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    private val mfarmerviewModel: FarmerViewModel by viewModels()
+    private val rejectedViewModel: RejectedViewModel by viewModels()
     private lateinit var adapter: SubFarmerAdaptor
     lateinit var binding: ActivityMainBinding
-    private lateinit var mSupervisorViewModel: Supervisor_ViewModel
-    private lateinit var mfarmerviewModel: FarmerViewModel
     private lateinit var progessDialog: ProgressDialog
     private lateinit var championId: String
 
@@ -49,7 +56,6 @@ class SubFarmerList : AppCompatActivity() {
     private fun LoadUi() {
         binding.txtTitle.text = "Sub Farmer List"
         championId = intent.getStringExtra(AppUtils.CHAMPION_ID)!!
-        setupViewModel()
         if (!NetworkUtil.getConnectivityStatusString(applicationContext)
                 .equals("Not connected to Internet")
         ) {
@@ -91,15 +97,6 @@ class SubFarmerList : AppCompatActivity() {
     }
 
 
-    private fun setupViewModel() {
-        mSupervisorViewModel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
-        mfarmerviewModel = ViewModelProvider(this).get(FarmerViewModel::class.java)
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
-    }
 
     private fun get(id: String) {
         mfarmerviewModel.readAllSubFarmerByGroupId(id)!!.observe(this, Observer {

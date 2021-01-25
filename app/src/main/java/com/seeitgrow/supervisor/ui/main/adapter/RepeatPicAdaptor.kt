@@ -112,7 +112,7 @@ class RepeatPicAdaptor(
 
     private fun AcceptPopUp(siteName: String, siteId: String, reportId: String, position: Int) {
         val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> {
                         updateStatus(
@@ -156,7 +156,9 @@ class RepeatPicAdaptor(
 
         }
         val alertDialog: AlertDialog = dialogBuilder.create()
-        img_close.setOnClickListener { v: View? -> alertDialog.dismiss() }
+        img_close.setOnClickListener {
+            alertDialog.dismiss()
+        }
         alertDialog.show()
     }
 

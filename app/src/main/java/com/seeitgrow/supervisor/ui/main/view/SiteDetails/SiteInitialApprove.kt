@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.os.Bundle
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -21,18 +22,25 @@ import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.InitialImageApproveBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
+import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class SiteInitialApprove : AppCompatActivity() {
     lateinit var _binding: InitialImageApproveBinding
-    private lateinit var viewModel: MainViewModel
     var RejectedMessage = ArrayList<RejectedMessageDetail>()
     var RejectedArray = ArrayList<String>()
-    private lateinit var rejectedViewModel: RejectedViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    private val mfarmerviewModel: FarmerViewModel by viewModels()
+    private val rejectedViewModel: RejectedViewModel by viewModels()
     private lateinit var progessDialog: ProgressDialog
     private lateinit var SiteDetail: SiteListResponse
     private lateinit var rejectComment: String
@@ -66,11 +74,6 @@ class SiteInitialApprove : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun LoadUi() {
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
-        rejectedViewModel = ViewModelProvider(this).get(RejectedViewModel::class.java)
         rejectedViewModel.readAllRejectedMessage()!!.observe(this, Observer {
             if (RejectedMessage != null) {
                 RejectedMessage = it as ArrayList<RejectedMessageDetail>

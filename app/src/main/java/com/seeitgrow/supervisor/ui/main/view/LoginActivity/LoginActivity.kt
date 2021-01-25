@@ -4,9 +4,10 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
@@ -14,22 +15,25 @@ import com.seeitgrow.supervisor.databinding.SignupLoginBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.AppUtils.SEASON_CODE
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class LoginActivity : AppCompatActivity() {
 
     lateinit var _binding: SignupLoginBinding
-    private lateinit var viewModel: MainViewModel
-    private lateinit var mSupervisorViewModel: Supervisor_ViewModel
-    private lateinit var mfarmerviewModel: FarmerViewModel
-    private lateinit var rejectedViewModel: RejectedViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    private val mfarmerviewModel: FarmerViewModel by viewModels()
+    private val rejectedViewModel: RejectedViewModel by viewModels()
     private lateinit var progessDialog: ProgressDialog
     private var SupervisorId: String? = null
 
@@ -69,13 +73,6 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun Loadui() {
-        mSupervisorViewModel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
-        mfarmerviewModel = ViewModelProvider(this).get(FarmerViewModel::class.java)
-        rejectedViewModel = ViewModelProvider(this).get(RejectedViewModel::class.java)
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
         _binding.edtMobileno.setText("9940395451")
     }
 
@@ -144,7 +141,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getRejectedMessage() {
-        SupervisorId?.let { it ->
+        SupervisorId?.let { _ ->
             viewModel.getRejectedStatus(SEASON_CODE).observe(this, Observer {
                 it?.let { resource ->
                     when (resource.status) {

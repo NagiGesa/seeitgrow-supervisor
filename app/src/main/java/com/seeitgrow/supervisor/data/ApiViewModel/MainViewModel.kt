@@ -7,7 +7,8 @@ import com.seeitgrow.supervisor.utils.Resource
 import kotlinx.coroutines.Dispatchers
 
 
-class MainViewModel(private val apiRepository: ApiRepository) : ViewModel() {
+class MainViewModel(private val apiRepository: ApiRepository) :
+    ViewModel() {
 
 
     fun getFarmerList(supervisorId: String, seasonCode: String) = liveData(Dispatchers.IO) {
@@ -113,7 +114,7 @@ class MainViewModel(private val apiRepository: ApiRepository) : ViewModel() {
     fun updateRepeatPictureStatus(
         SiteId: String,
         Status: String,
-        uniqueId:String,
+        uniqueId: String,
         isApproverId: String,
         approveComment: String
     ) = liveData(Dispatchers.IO) {

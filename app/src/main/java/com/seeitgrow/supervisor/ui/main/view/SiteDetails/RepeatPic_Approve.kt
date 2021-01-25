@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.*
+import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -24,20 +25,28 @@ import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.RepeatpicApproveBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.RepeatPicAdaptor
+import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListener {
 
     lateinit var _binding: RepeatpicApproveBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    private val mfarmerviewModel: FarmerViewModel by viewModels()
+    private val rejectedViewModel: RejectedViewModel by viewModels()
     private lateinit var progessDialog: ProgressDialog
     private lateinit var SiteDetail: SiteListResponse
     private lateinit var farmerId: String
     private lateinit var ImagePath: String
-    private lateinit var rejectedViewModel: RejectedViewModel
     var RejectedMessage = ArrayList<RejectedMessageDetail>()
     var RejectedArray = ArrayList<String>()
     private lateinit var adapter: RepeatPicAdaptor
@@ -62,19 +71,11 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
 
     @SuppressLint("SetTextI18n")
     private fun LoadUi() {
-        viewModel = ViewModelProvider(
-
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
-        rejectedViewModel = ViewModelProvider(this).get(RejectedViewModel::class.java)
         rejectedViewModel.readAllRejectedMessage()!!.observe(this, Observer {
-            if (RejectedMessage != null) {
-                RejectedMessage = it as ArrayList<RejectedMessageDetail>
+            RejectedMessage = it as ArrayList<RejectedMessageDetail>
 
-                for (i in RejectedMessage) {
-                    RejectedArray.add(i.EnglishDescription.toString())
-                }
+            for (i in RejectedMessage) {
+                RejectedArray.add(i.EnglishDescription.toString())
             }
 
 
@@ -118,11 +119,11 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
 
         var ImageDetail: String? = null
 
-        ImageDetail = if (imageType.equals("Site")) {
+        (if (imageType.equals("Site")) {
             imagePath
         } else {
             AppUtils.ImagePath(SiteDetail.SeasonCode!!, "Repeat") + imagePath
-        }
+        }).also { ImageDetail = it }
         editText.load(let {
             ImageDetail
         }) {
@@ -194,14 +195,13 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
 
         var rejectComment: String? = null
 
-        auto_reject.onItemClickListener =
-            AdapterView.OnItemClickListener { parent: AdapterView<*>?, view: View?, position: Int, id: Long ->
-                rejectComment = RejectedArray.get(position)
+        AdapterView.OnItemClickListener { _: AdapterView<*>?, _: View?, position: Int, _: Long ->
+            rejectComment = RejectedArray.get(position)
 
-            }
+        }.also { auto_reject.onItemClickListener = it }
 
         val alertDialog: AlertDialog = dialogBuilder.create()
-        btn_reject.setOnClickListener { v: View? ->
+        btn_reject.setOnClickListener { _: View? ->
             run {
                 if (rejectComment != null) {
                     alertDialog.dismiss()
@@ -211,7 +211,7 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
                 }
             }
         }
-        img_close.setOnClickListener { v: View? -> alertDialog.dismiss() }
+        img_close.setOnClickListener { alertDialog.dismiss() }
         alertDialog.show()
     }
 
@@ -222,7 +222,7 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
         position: Int
     ) {
         val dialogClickListener =
-            DialogInterface.OnClickListener { dialog, which ->
+            DialogInterface.OnClickListener { _, which ->
                 when (which) {
                     DialogInterface.BUTTON_POSITIVE -> {
                         updateStatus(

@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,21 +17,26 @@ import com.seeitgrow.supervisor.databinding.ActivityMainBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.ChampionAdaptor
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class ChampionList : AppCompatActivity() {
 
-    private lateinit var viewModel: MainViewModel
     private lateinit var adapter: ChampionAdaptor
     private lateinit var progessDialog: ProgressDialog
     lateinit var binding: ActivityMainBinding
-    private lateinit var mSupervisorViewModel: Supervisor_ViewModel
-    private lateinit var mfarmerviewModel: FarmerViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    private val mfarmerviewModel: FarmerViewModel by viewModels()
+    private val rejectedViewModel: RejectedViewModel by viewModels()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,7 +56,6 @@ class ChampionList : AppCompatActivity() {
     }
 
     private fun Loadui() {
-        setupViewModel()
         if (!NetworkUtil.getConnectivityStatusString(applicationContext)
                 .equals("Not connected to Internet")
         ) {
@@ -95,15 +100,6 @@ class ChampionList : AppCompatActivity() {
         }
     }
 
-    private fun setupViewModel() {
-        mSupervisorViewModel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
-        mfarmerviewModel = ViewModelProvider(this).get(FarmerViewModel::class.java)
-
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
-    }
 
     private fun get() {
         mfarmerviewModel.readAllFarmerByGroupId()!!.observe(this, {

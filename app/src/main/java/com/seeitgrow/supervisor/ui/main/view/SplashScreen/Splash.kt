@@ -4,18 +4,27 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.WindowManager
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
+import com.seeitgrow.supervisor.data.api.ApiHelper
+import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.SplashScreenBinding
+import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.view.LoginActivity.LoginActivity
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
+import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class Splash : AppCompatActivity() {
     lateinit var binding: SplashScreenBinding
-    private lateinit var supervisorViewmodel: Supervisor_ViewModel
+    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -27,19 +36,14 @@ class Splash : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
-        Loadui()
-
-
     }
 
-    private fun Loadui() {
-        supervisorViewmodel = ViewModelProvider(this).get(Supervisor_ViewModel::class.java)
-    }
+
 
     override fun onStart() {
         super.onStart()
         Handler().postDelayed({
-            supervisorViewmodel.getSupervisorCount.observe(this, Observer { count ->
+            mSupervisorViewModel.getSupervisorCount.observe(this, Observer { count ->
                 if (count > 0) {
                     startActivity(Intent(this, ChampionList::class.java))
                 } else {

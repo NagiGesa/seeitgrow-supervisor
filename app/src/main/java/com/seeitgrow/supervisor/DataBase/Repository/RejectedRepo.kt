@@ -3,8 +3,9 @@ package com.seeitgrow.supervisor.DataBase.Repository
 import androidx.lifecycle.LiveData
 import com.seeitgrow.supervisor.DataBase.Dao.Rejected_Dao
 import com.seeitgrow.supervisor.DataBase.Model.RejectedMessageDetail
+import javax.inject.Inject
 
-class RejectedRepo(private val rejectedDao: Rejected_Dao) {
+class RejectedRepo @Inject constructor(private val rejectedDao: Rejected_Dao) {
 
     var rejectedMessageDetail: LiveData<List<RejectedMessageDetail>>? = null
 

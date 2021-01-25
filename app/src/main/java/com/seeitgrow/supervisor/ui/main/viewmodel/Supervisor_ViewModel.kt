@@ -1,33 +1,21 @@
 package com.seeitgrow.supervisor.ui.main.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
+import androidx.hilt.lifecycle.ViewModelInject
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seeitgrow.supervisor.DataBase.Model.SupervisorDetails
 import com.seeitgrow.supervisor.DataBase.Repository.UserRepository
-import com.seeitgrow.supervisor.DataBase.UserDatabase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class Supervisor_ViewModel(application: Application) : AndroidViewModel(application) {
-
-    val readAllData: LiveData<List<SupervisorDetails>>
-
-    val getSupervisorCount: LiveData<Integer>
-
+class Supervisor_ViewModel @ViewModelInject constructor(
     private val repository: UserRepository
+) : ViewModel() {
 
-    init {
-        val userDao = UserDatabase.getDatabase(application).superVisorDao()
-        repository = UserRepository(userDao)
+    val readAllData = repository.readAllData
 
-        readAllData = repository.readAllData
-
-        getSupervisorCount = repository.getCount
-
-
-    }
+    val getSupervisorCount = repository.getCount
 
     fun addUser(SupervisorDetails: List<SupervisorDetails>) {
         viewModelScope.launch(Dispatchers.IO) {

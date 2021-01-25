@@ -3,6 +3,7 @@ package com.seeitgrow.supervisor.ui.main.view.SiteDetails
 import android.app.ProgressDialog
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -13,13 +14,20 @@ import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.SitelistBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SiteListAdaptor
+import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
+import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.Status
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 @Suppress("DEPRECATION")
 class SiteList_Activity : AppCompatActivity() {
     lateinit var _binding: SitelistBinding
-    private lateinit var viewModel: MainViewModel
+    private val viewModel: MainViewModel by viewModels {
+        ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
+    }
     private lateinit var progessDialog: ProgressDialog
     private lateinit var championId: String
     private lateinit var farmerName: String
@@ -44,12 +52,6 @@ class SiteList_Activity : AppCompatActivity() {
         championId = intent.getStringExtra(AppUtils.FARMER_ID)!!
         farmerName = intent.getStringExtra(AppUtils.FARMER_NAME)!!
         _binding.txtTitle.text = farmerName
-        viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
-        ).get(MainViewModel::class.java)
-
-
     }
 
 

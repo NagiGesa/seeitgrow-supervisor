@@ -23,6 +23,6 @@ interface Supervisor_Dao {
     fun readAllData(): LiveData<List<SupervisorDetails>>
 
     @Query("SELECT Count(*) from supervisor_details")
-    fun getSupervisorCount(): LiveData<Integer>
+    fun getSupervisorCount(): LiveData<Int>
 
 }
