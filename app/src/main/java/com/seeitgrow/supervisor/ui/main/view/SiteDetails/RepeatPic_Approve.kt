@@ -11,7 +11,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import coil.load
 import com.google.gson.Gson
@@ -50,6 +49,7 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
     var RejectedMessage = ArrayList<RejectedMessageDetail>()
     var RejectedArray = ArrayList<String>()
     private lateinit var adapter: RepeatPicAdaptor
+    private lateinit var siteListArray: ArrayList<SiteListResponse>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -147,6 +147,11 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
                                 progessDialog.dismiss()
                                 if (users?.get(0)?.Error != null) {
                                     AppUtils.showMessage(this, users[0].Error.toString())
+                                } else if (users?.get(0)?.RepeatId.equals("0") && users?.get(0)?.ReportsId.equals(
+                                        "0"
+                                    )
+                                ) {
+                                    AppUtils.showMessage(this, "No pending repeat images")
                                 } else {
                                     users?.let { it1 ->
                                         reterive(it1)
@@ -170,6 +175,7 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
     }
 
     private fun reterive(users: List<SiteListResponse>) {
+        siteListArray = users as ArrayList<SiteListResponse>
         _binding.recySite.visibility = View.VISIBLE
         adapter = RepeatPicAdaptor(users, RejectedArray, this, this)
         _binding.recySite.adapter = adapter
@@ -266,6 +272,9 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
                     Status.SUCCESS -> {
                         progessDialog.dismiss()
                         adapter.notifyItemRemoved(position)
+                        siteListArray.removeAt(position)
+                        reterive(siteListArray)
+                        adapter.notifyDataSetChanged()
                     }
                     Status.ERROR -> {
                         progessDialog.dismiss()
@@ -290,6 +299,10 @@ class RepeatPic_Approve : AppCompatActivity(), RepeatPicAdaptor.MyListClickListe
     ) {
         if (status.equals("Completed")) {
             adapter.notifyItemRemoved(position)
+            siteListArray.removeAt(position)
+            reterive(siteListArray)
+            adapter.notifyDataSetChanged()
+
         } else {
             OpenRejectedPopUp(SiteId, reportId, position)
         }

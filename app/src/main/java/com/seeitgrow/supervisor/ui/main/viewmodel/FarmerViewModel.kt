@@ -31,4 +31,10 @@ class FarmerViewModel @ViewModelInject constructor(
             repository.addFarmer(user)
         }
     }
+
+    fun DeleteAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deleteFarmer()
+        }
+    }
 }

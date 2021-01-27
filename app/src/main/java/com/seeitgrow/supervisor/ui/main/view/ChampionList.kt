@@ -1,14 +1,18 @@
 package com.seeitgrow.supervisor.ui.main.view
 
+import android.app.AlertDialog
 import android.app.ProgressDialog
+import android.content.DialogInterface
 import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
+import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.data.api.ApiHelper
@@ -16,6 +20,7 @@ import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.ActivityMainBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.ChampionAdaptor
+import com.seeitgrow.supervisor.ui.main.view.SplashScreen.Splash
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
@@ -23,6 +28,7 @@ import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 @Suppress("DEPRECATION")
@@ -53,6 +59,37 @@ class ChampionList : AppCompatActivity() {
         Loadui()
 
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater = menuInflater
+        inflater.inflate(R.menu.main_menu, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        // Handle item selection
+        return when (item.itemId) {
+            R.id.logout -> {
+                LogOut()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun LogOut() {
+        AlertDialog.Builder(this)
+            .setMessage("Are you sure you want to sign out?")
+            .setPositiveButton("Yes") { dialog: DialogInterface?, which: Int ->
+                mSupervisorViewModel.DeleteAll()
+                mfarmerviewModel.DeleteAll()
+                rejectedViewModel.DeleteAll()
+
+                startActivity(Intent(this, Splash::class.java))
+            }
+            .setNegativeButton("No") { dialog: DialogInterface?, which: Int -> }
+            .show()
     }
 
     private fun Loadui() {
@@ -135,6 +172,5 @@ class ChampionList : AppCompatActivity() {
         startMain.addCategory(Intent.CATEGORY_HOME)
         startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(startMain)
-        finish()
     }
 }

@@ -18,7 +18,7 @@ class RejectedRepo @Inject constructor(private val rejectedDao: Rejected_Dao) {
         rejectedDao.insertRejectedMessage(messageDetail)
     }
 
-    suspend fun deleteMesage() {
+    suspend fun deletRejected() {
         rejectedDao.deleteRejected()
     }
 }

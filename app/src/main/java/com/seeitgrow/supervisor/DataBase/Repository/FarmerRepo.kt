@@ -22,5 +22,8 @@ class FarmerRepo @Inject constructor(private val farmerDao: FarmerDao) {
     suspend fun addFarmer(user: List<FarmerDetails>) {
         farmerDao.insertFarmerDetails(user)
     }
+    suspend fun deleteFarmer() {
+        farmerDao.deleteFarmer()
+    }
 
 }

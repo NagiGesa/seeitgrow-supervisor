@@ -18,4 +18,7 @@ interface FarmerDao {
 
     @Query("SELECT * from farmer_table where GroupFarmerId = :groupId")
     fun getAllSubFarmerId(groupId :String?) : LiveData<List<FarmerDetails>>
+
+    @Query("Delete from farmer_table")
+    suspend fun deleteFarmer()
 }

@@ -25,4 +25,10 @@ class RejectedViewModel @ViewModelInject constructor(
             repository.addRejectedMessage(user)
         }
     }
+
+    fun DeleteAll() {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.deletRejected()
+        }
+    }
 }

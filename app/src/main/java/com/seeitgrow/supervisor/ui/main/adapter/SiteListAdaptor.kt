@@ -42,10 +42,13 @@ class SiteListAdaptor(
                 binding.txtPendingCount.text = "Pending Count: " + SiteDetail.TotalPendingImage
 
                 if (SiteDetail.InitialStatus.equals("0")) {
-                    val unwrappedDrawable =
-                        AppCompatResources.getDrawable(root.context, R.drawable.notification_dot)
-                    val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-                    DrawableCompat.setTint(wrappedDrawable, Color.RED)
+//                    val unwrappedDrawable =
+//                        AppCompatResources.getDrawable(root.context, R.drawable.notification_dot)
+//                    val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
+//                    DrawableCompat.setTint(wrappedDrawable, Color.RED)
+                    binding.imgNotification.setImageResource(R.drawable.notification_dot_red)
+                }else{
+                    binding.imgNotification.setImageResource(R.drawable.notification_dot)
                 }
 
                 val lat = SiteDetail.InitialLatitude
@@ -56,12 +59,22 @@ class SiteListAdaptor(
                 }
                 val image = AppUtils.ImagePath(SiteDetail.SeasonCode!!, "Site")
                 binding.imgFarmerImage.load(
-
                     image + SiteDetail.InitialImagePath
                 ) {
                     crossfade(true)
                     placeholder(R.drawable.wheatfield1)
                     transformations(CircleCropTransformation())
+                }
+
+                binding.imgFrwd.setOnClickListener {
+                    val gson = Gson()
+                    val json = gson.toJson(SiteDetail)
+                    SharedPrefManager.getInstance(root.context).saveSiteId(json!!)
+                    if (SiteDetail.InitialStatus.equals("0")) {
+                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
+                    } else {
+                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
+                    }
                 }
 
             }
@@ -85,17 +98,7 @@ class SiteListAdaptor(
         if (currentNote != null && position != RecyclerView.NO_POSITION) {
             holder.bind(currentNote)
         }
-        binding.imgFrwd.setOnClickListener {
-            val details = SiteListDetail[holder.adapterPosition]
-            val gson = Gson()
-            val json = gson.toJson(details)
-            SharedPrefManager.getInstance(mContext).saveSiteId(json!!)
-            if (details.InitialStatus.equals("0")) {
-                mContext.startActivity(Intent(mContext, SiteInitialApprove::class.java))
-            } else {
-                mContext.startActivity(Intent(mContext, RepeatPic_Approve::class.java))
-            }
-        }
+
     }
 
     override fun getItemCount(): Int = SiteListDetail.size

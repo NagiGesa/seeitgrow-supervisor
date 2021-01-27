@@ -55,4 +55,13 @@ class Splash : AppCompatActivity() {
             finish()
         }, 3000)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val startMain = Intent(Intent.ACTION_MAIN)
+        startMain.addCategory(Intent.CATEGORY_HOME)
+        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        startActivity(startMain)
+        finish()
+    }
 }

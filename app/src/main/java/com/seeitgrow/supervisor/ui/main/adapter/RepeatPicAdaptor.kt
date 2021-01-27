@@ -59,6 +59,7 @@ class RepeatPicAdaptor(
                 }
                 binding.txtSiteCreated.text =
                     "CreatedOn : " + currentNote.RepeatCreatedOn.toString().substring(0, 10)
+                binding.txtSiteName.text = currentNote.SiteName
                 val image = AppUtils.ImagePath(currentNote.SeasonCode!!, "Images")
                 binding.imgSite.load(
 
