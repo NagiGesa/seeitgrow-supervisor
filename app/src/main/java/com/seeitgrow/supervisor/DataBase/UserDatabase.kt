@@ -11,7 +11,7 @@ import com.seeitgrow.supervisor.DataBase.Model.SupervisorDetails
 
 @Database(
     entities = [SupervisorDetails::class, FarmerDetails::class, RejectedMessageDetail::class],
-    version = 2,
+    version = 1,
     exportSchema = false
 )
 abstract class UserDatabase : RoomDatabase() {

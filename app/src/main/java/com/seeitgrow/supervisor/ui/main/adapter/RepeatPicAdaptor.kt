@@ -41,7 +41,36 @@ class RepeatPicAdaptor(
     lateinit var binding: RepearPicApproveViewBinding
     private lateinit var progessDialog: ProgressDialog
 
-    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class DataViewHolder(private val binding: RepearPicApproveViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+
+            }
+        }
+
+        fun bind(currentNote: SiteListResponse) {
+            binding.apply {
+                val lat = currentNote.InitialLatitude
+                val long = currentNote.InitialLongitude
+                if (lat != null && long != null) {
+                    binding.txtLocation.text =
+                        currentNote.RepeatLatitude.toString() + " , " + currentNote.RepeatLatitude.toString()
+                }
+                binding.txtSiteCreated.text =
+                    "CreatedOn : " + currentNote.RepeatCreatedOn.toString().substring(0, 10)
+                val image = AppUtils.ImagePath(currentNote.SeasonCode!!, "Images")
+                binding.imgSite.load(
+
+                    image + currentNote.RepeatImagePath
+                ) {
+                    crossfade(true)
+                    placeholder(R.drawable.wheatfield1)
+
+                }
+            }
+        }
+    }
 
     override fun onCreateViewHolder(
         parent: ViewGroup,
@@ -53,32 +82,15 @@ class RepeatPicAdaptor(
             mContext as RepeatPic_Approve,
             ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
         ).get(MainViewModel::class.java)
-        return DataViewHolder(binding.root)
+        return DataViewHolder(binding)
     }
 
     @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        val SiteDetail = SiteListDetail[position]
 
-        binding.txtSiteName.text = SiteDetail.SiteName
-
-
-        val lat = SiteDetail.InitialLatitude
-        val long = SiteDetail.InitialLongitude
-        if (lat != null && long != null) {
-            binding.txtLocation.text =
-                SiteDetail.RepeatLatitude.toString() + " , " + SiteDetail.RepeatLatitude.toString()
-        }
-        binding.txtSiteCreated.text =
-            "CreatedOn : " + SiteDetail.RepeatCreatedOn.toString().substring(0, 10)
-        val image = AppUtils.ImagePath(SiteDetail.SeasonCode!!, "Images")
-        binding.imgSite.load(
-
-            image + SiteDetail.RepeatImagePath
-        ) {
-            crossfade(true)
-            placeholder(R.drawable.wheatfield1)
-
+        val currentNote = SiteListDetail[position]
+        if (currentNote != null && position != RecyclerView.NO_POSITION) {
+            holder.bind(currentNote)
         }
 
         binding.imgSite.setOnClickListener {

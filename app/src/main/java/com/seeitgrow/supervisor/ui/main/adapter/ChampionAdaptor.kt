@@ -3,7 +3,6 @@ package com.seeitgrow.supervisor.ui.main.adapter
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
@@ -20,38 +19,51 @@ class ChampionAdaptor(private val users: List<FarmerDetails>, private val mConte
     RecyclerView.Adapter<DataViewHolder>() {
     lateinit var binding: FarmerListViewBinding
 
-    class DataViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class DataViewHolder(private val binding: FarmerListViewBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        init {
+            binding.root.setOnClickListener {
+
+            }
+        }
+
+        fun bind(currentNote: FarmerDetails) {
+            binding.apply {
+                binding.txtChampionName.text = currentNote.FirstName
+
+                binding.txtPendingCount.text = "Pending Count: ${currentNote.TotalPendingImage}"
+
+                binding.imgFrwd.setOnClickListener{
+                    val intent = Intent(root.context, SubFarmerList::class.java)
+                    intent.putExtra(CHAMPION_ID, currentNote.FarmerID)
+                    root.context.startActivity(intent)
+                }
+
+                binding.imgFarmerImage.load(let {
+                    "http://52.183.134.41/PBINSURANCE/Pictures/2020/HR/Rabi2020/Sites/L51114F00964C05S00946Ip.jpg"
+                }) {
+                    crossfade(true)
+                    placeholder(R.drawable.ic_account)
+                    transformations(CircleCropTransformation())
+                }
+            }
+        }
+    }
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
         binding = FarmerListViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return DataViewHolder(binding.root)
+        return DataViewHolder(binding)
     }
 
     override fun getItemCount(): Int = users.size
 
     override fun onBindViewHolder(holder: DataViewHolder, position: Int) {
-        val Far = users[position]
 
+        val currentNote = users[position]
 
-        binding.txtChampionName.text = Far.FirstName
-
-        binding.txtPendingCount.text =  "Pending Count: " +Far.TotalPendingImage
-
-        binding.imgFarmerImage.load(let {
-            "http://52.183.134.41/PBINSURANCE/Pictures/2020/HR/Rabi2020/Sites/L51114F00964C05S00946Ip.jpg"
-        }) {
-            crossfade(true)
-            placeholder(R.drawable.ic_account)
-            transformations(CircleCropTransformation())
-        }
-
-
-        binding.imgFrwd.setOnClickListener {
-            val details = users[holder.adapterPosition]
-            val intent = Intent(mContext, SubFarmerList::class.java)
-            intent.putExtra(CHAMPION_ID, details.FarmerID)
-            mContext.startActivity(intent)
+        if (currentNote != null && position != RecyclerView.NO_POSITION) {
+            holder.bind(currentNote)
         }
     }
 

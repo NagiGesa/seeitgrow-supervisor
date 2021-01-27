@@ -1,21 +1,22 @@
 package com.seeitgrow.supervisor.ui.main.view
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
+import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.ActivityMainBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SubFarmerAdaptor
+import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteList_Activity
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
@@ -25,7 +26,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Suppress("DEPRECATION")
-class SubFarmerList : AppCompatActivity() {
+class SubFarmerList : AppCompatActivity(){
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
     }
@@ -35,6 +36,7 @@ class SubFarmerList : AppCompatActivity() {
     private lateinit var adapter: SubFarmerAdaptor
     lateinit var binding: ActivityMainBinding
     private lateinit var progessDialog: ProgressDialog
+    private lateinit var UserArray: List<FarmerDetails>
     private lateinit var championId: String
 
 
@@ -97,7 +99,6 @@ class SubFarmerList : AppCompatActivity() {
     }
 
 
-
     private fun get(id: String) {
         mfarmerviewModel.readAllSubFarmerByGroupId(id)!!.observe(this, Observer {
             if (it != null) {
@@ -109,6 +110,7 @@ class SubFarmerList : AppCompatActivity() {
 
     private fun reterive(users: List<FarmerDetails>) {
         binding.recyclerView.visibility = View.VISIBLE
+        UserArray = users
         val adapter = SubFarmerAdaptor(users, this)
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
@@ -119,4 +121,5 @@ class SubFarmerList : AppCompatActivity() {
         onBackPressed()
         return true
     }
+
 }
