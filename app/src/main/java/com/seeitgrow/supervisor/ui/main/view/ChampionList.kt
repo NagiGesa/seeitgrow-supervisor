@@ -56,9 +56,6 @@ class ChampionList : AppCompatActivity() {
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
         supportActionBar!!.setDisplayShowTitleEnabled(false)
 
-        Loadui()
-
-
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -92,7 +89,8 @@ class ChampionList : AppCompatActivity() {
             .show()
     }
 
-    private fun Loadui() {
+    override fun onStart() {
+        super.onStart()
         if (!NetworkUtil.getConnectivityStatusString(applicationContext)
                 .equals("Not connected to Internet")
         ) {
@@ -100,8 +98,6 @@ class ChampionList : AppCompatActivity() {
         } else {
             get()
         }
-
-
     }
 
     private fun getChampionList() {

@@ -1,7 +1,6 @@
 package com.seeitgrow.supervisor.ui.main.view
 
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.activity.viewModels
@@ -15,7 +14,6 @@ import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.ActivityMainBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SubFarmerAdaptor
-import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteList_Activity
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
@@ -26,7 +24,7 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 @Suppress("DEPRECATION")
-class SubFarmerList : AppCompatActivity(){
+class SubFarmerList : AppCompatActivity() {
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
     }
@@ -58,6 +56,12 @@ class SubFarmerList : AppCompatActivity(){
     private fun LoadUi() {
         binding.txtTitle.text = "Sub Farmer List"
         championId = intent.getStringExtra(AppUtils.CHAMPION_ID)!!
+
+
+    }
+
+    override fun onStart() {
+        super.onStart()
         if (!NetworkUtil.getConnectivityStatusString(applicationContext)
                 .equals("Not connected to Internet")
         ) {
@@ -65,7 +69,6 @@ class SubFarmerList : AppCompatActivity(){
         } else {
             championId.let { get(it) }
         }
-
     }
 
     private fun getChampionList() {
