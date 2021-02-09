@@ -17,7 +17,7 @@ import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
-import com.seeitgrow.supervisor.databinding.ActivityMainBinding
+import com.seeitgrow.supervisor.databinding.ChampionListBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.ChampionAdaptor
 import com.seeitgrow.supervisor.ui.main.view.SplashScreen.Splash
@@ -36,7 +36,7 @@ class ChampionList : AppCompatActivity() {
 
     private lateinit var adapter: ChampionAdaptor
     private lateinit var progessDialog: ProgressDialog
-    lateinit var binding: ActivityMainBinding
+    lateinit var binding: ChampionListBinding
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
     }
@@ -47,7 +47,7 @@ class ChampionList : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = ChampionListBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
 

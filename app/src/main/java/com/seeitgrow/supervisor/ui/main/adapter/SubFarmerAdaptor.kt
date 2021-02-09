@@ -1,30 +1,28 @@
 package com.seeitgrow.supervisor.ui.main.adapter
 
 import android.content.Context
-import android.content.Intent
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
-import androidx.recyclerview.widget.DiffUtil
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.databinding.FarmerListViewBinding
-import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteList_Activity
+import com.seeitgrow.supervisor.ui.NavTest.SubFarmerList_FragmentDirections
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 
-class SubFarmerAdaptor(private val users: List<FarmerDetails>,
-                       private val mContext: Context
+class SubFarmerAdaptor(
+    private val users: List<FarmerDetails>,
+    private val mContext: Context
 ) :
     RecyclerView.Adapter<SubFarmerAdaptor.DataViewHolder>() {
     lateinit var binding: FarmerListViewBinding
 
     class DataViewHolder(private val binding: FarmerListViewBinding) :
-        RecyclerView.ViewHolder(binding.root){
+        RecyclerView.ViewHolder(binding.root) {
 
         init {
-            binding.root.setOnClickListener{
+            binding.root.setOnClickListener {
 
             }
         }
@@ -38,7 +36,6 @@ class SubFarmerAdaptor(private val users: List<FarmerDetails>,
         }
 
     }
-
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DataViewHolder {
@@ -61,10 +58,16 @@ class SubFarmerAdaptor(private val users: List<FarmerDetails>,
                     .equals("Not connected to Internet")
             ) {
                 val details = users[holder.adapterPosition]
-                val intent = Intent(mContext, SiteList_Activity::class.java)
-                intent.putExtra(AppUtils.FARMER_ID, details.FarmerID)
-                intent.putExtra(AppUtils.FARMER_NAME, details.FirstName)
-                mContext.startActivity(intent)
+//                val intent = Intent(mContext, SiteList_Activity::class.java)
+//                intent.putExtra(AppUtils.FARMER_ID, details.FarmerID)
+//                intent.putExtra(AppUtils.FARMER_NAME, details.FirstName)
+//                mContext.startActivity(intent)
+                val action =
+                    SubFarmerList_FragmentDirections.actionSubFarmerFragmentToSiteListFragment(
+                        details.FarmerID!!,details.FirstName!!
+                    )
+
+                Navigation.findNavController(binding.root).navigate(action)
             } else {
                 AppUtils.showMessage(mContext, "Not connected to Internet")
             }

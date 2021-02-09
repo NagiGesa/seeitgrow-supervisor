@@ -4,12 +4,14 @@ import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.databinding.FarmerListViewBinding
+import com.seeitgrow.supervisor.ui.NavTest.ChampionList_FragmentDirections
 import com.seeitgrow.supervisor.ui.main.adapter.ChampionAdaptor.DataViewHolder
 import com.seeitgrow.supervisor.ui.main.view.SubFarmerList
 import com.seeitgrow.supervisor.utils.AppUtils.CHAMPION_ID
@@ -33,10 +35,17 @@ class ChampionAdaptor(private val users: List<FarmerDetails>, private val mConte
 
                 binding.txtPendingCount.text = "Pending Count: ${currentNote.TotalPendingImage}"
 
-                binding.imgFrwd.setOnClickListener{
-                    val intent = Intent(root.context, SubFarmerList::class.java)
-                    intent.putExtra(CHAMPION_ID, currentNote.FarmerID)
-                    root.context.startActivity(intent)
+                binding.imgFrwd.setOnClickListener {
+//                    val intent = Intent(root.context, SubFarmerList::class.java)
+//                    intent.putExtra(CHAMPION_ID, currentNote.FarmerID)
+//                    root.context.startActivity(intent)
+
+                    val action =
+                        ChampionList_FragmentDirections.actionChampionListNavToSubFarmerFragment(
+                            currentNote.FarmerID!!
+                        )
+//        navController.navigate(R.id.action_championList_Nav_to_subFarmer_Fragment,action)
+                    Navigation.findNavController(binding.root).navigate(action)
                 }
 
                 binding.imgFarmerImage.load(let {

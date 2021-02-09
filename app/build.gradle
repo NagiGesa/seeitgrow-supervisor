@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'androidx.navigation.safeargs.kotlin'
 }
 
 android {
@@ -87,7 +88,7 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.google.code.gson:gson:2.8.6'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.8.1'
 
 
@@ -104,10 +105,15 @@ dependencies {
 
     // DataBinding
     kapt "com.android.databinding:compiler:3.2.0-alpha10"
-    kapt "androidx.databinding:databinding-common:4.1.1"
+    kapt "androidx.databinding:databinding-common:4.1.2"
 
     // RecyclerView Animator
     implementation 'jp.wasabeef:recyclerview-animators:3.0.0'
+
+    def nav_version = "2.3.3"
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
 
     // Dagger Hilt
     implementation "com.google.dagger:hilt-android:2.28.3-alpha"

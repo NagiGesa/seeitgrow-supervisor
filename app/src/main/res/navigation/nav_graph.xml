@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/splash2">
+
+    <fragment
+        android:id="@+id/splash2"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.SplashScreen_Fragment"
+        android:label="Splash"
+        tools:layout="@layout/splash_screen">
+
+        <action
+            android:id="@+id/action_splash2_to_loginActivity"
+            app:destination="@id/loginActivity"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_splash2_to_championList_Nav"
+            app:destination="@id/championList_Nav"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/loginActivity"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.LoginFragment"
+        android:label="Log In"
+        tools:layout="@layout/signup_login">
+        <action
+            android:id="@+id/action_loginActivity_to_championList_Nav"
+            app:destination="@id/championList_Nav"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/championList_Nav"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.ChampionList_Fragment"
+        android:label="Champion List"
+        tools:layout="@layout/champion_list">
+        <action
+            android:id="@+id/action_championList_Nav_to_subFarmer_Fragment"
+            app:destination="@id/subFarmer_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/subFarmer_Fragment"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.SubFarmerList_Fragment"
+        android:label="SubFarmer List"
+        tools:layout="@layout/subfarmer_list">
+
+        <argument
+            android:name="data"
+            android:defaultValue=""
+            app:argType="string" />
+
+        <action
+            android:id="@+id/action_subFarmer_Fragment_to_siteList_Fragment"
+            app:destination="@id/siteList_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/siteList_Fragment"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.SiteList_Fragment"
+        android:label="Site List"
+        tools:layout="@layout/sitelist">
+
+        <argument
+            android:name="farmerId"
+            android:defaultValue=""
+            app:argType="string" />
+        <argument
+            android:name="farmerName"
+            android:defaultValue=""
+            app:argType="string" />
+        <action
+            android:id="@+id/action_siteList_Fragment_to_subFarmer_Fragment"
+            app:destination="@id/subFarmer_Fragment" />
+        <action
+            android:id="@+id/action_siteList_Fragment_to_siteImageApprove_Fragment"
+            app:destination="@id/siteImageApprove_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+        <action
+            android:id="@+id/action_siteList_Fragment_to_repeatPicApprove_Fragment"
+            app:destination="@id/repeatPicApprove_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/siteImageApprove_Fragment"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.SiteImageApprove_Fragment"
+        android:label="SiteImageApprove_Fragment"
+        tools:layout="@layout/initial_image_approve">
+        <action
+            android:id="@+id/action_siteImageApprove_Fragment_to_siteList_Fragment"
+            app:destination="@id/siteList_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+    <fragment
+        android:id="@+id/repeatPicApprove_Fragment"
+        android:name="com.seeitgrow.supervisor.ui.NavTest.RepeatPicApprove_Fragment"
+        android:label="RepeatPicApprove_Fragment"
+        tools:layout="@layout/repear_pic_approve_view">
+        <action
+            android:id="@+id/action_repeatPicApprove_Fragment_to_siteList_Fragment"
+            app:destination="@id/siteList_Fragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
+    </fragment>
+</navigation>

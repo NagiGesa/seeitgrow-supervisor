@@ -7,16 +7,9 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
-import com.seeitgrow.supervisor.data.api.ApiHelper
-import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.SplashScreenBinding
-import com.seeitgrow.supervisor.ui.base.ViewModelFactory
-import com.seeitgrow.supervisor.ui.main.view.LoginActivity.LoginActivity
 import com.seeitgrow.supervisor.ui.main.view.ChampionList
-import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
+import com.seeitgrow.supervisor.ui.main.view.LoginActivity.LoginActivity
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -37,7 +30,6 @@ class Splash : AppCompatActivity() {
         )
 
     }
-
 
 
     override fun onStart() {

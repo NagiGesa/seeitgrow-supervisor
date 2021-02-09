@@ -1,12 +1,18 @@
-package com.seeitgrow.supervisor.ui.main.view
+package com.seeitgrow.supervisor.ui.NavTest
 
 import android.app.ProgressDialog
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.api.ApiHelper
@@ -15,72 +21,75 @@ import com.seeitgrow.supervisor.databinding.SubfarmerListBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
 import com.seeitgrow.supervisor.ui.main.adapter.SubFarmerAdaptor
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
-import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
-@AndroidEntryPoint
+
 @Suppress("DEPRECATION")
-class SubFarmerList : AppCompatActivity() {
+@AndroidEntryPoint
+class SubFarmerList_Fragment : Fragment() {
+    private val args: SubFarmerList_FragmentArgs? by navArgs()
+    lateinit var navController: NavController
+    val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
+    lateinit var _binding: SubfarmerListBinding
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
     }
-    private val mSupervisorViewModel: Supervisor_ViewModel by viewModels()
     private val mfarmerviewModel: FarmerViewModel by viewModels()
-    private val rejectedViewModel: RejectedViewModel by viewModels()
-    private lateinit var adapter: SubFarmerAdaptor
-    lateinit var binding: SubfarmerListBinding
     private lateinit var progessDialog: ProgressDialog
     private lateinit var UserArray: List<FarmerDetails>
-    private lateinit var championId: String
 
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = SubfarmerListBinding.inflate(inflater, container, false)
+        return _binding.root
+    }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = SubfarmerListBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
 
+        val dataString = requireActivity().intent.dataString
 
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+        val data = try {
+            if (args?.data.isNullOrEmpty()) dataString else args?.data
+        } catch (e: Exception) {
+            dataString
+        }
 
-        LoadUi()
+        if (!data.isNullOrEmpty())
+            Loadui(data)
 
     }
 
-    private fun LoadUi() {
-        binding.txtTitle.text = "Sub Farmer List"
-        championId = intent.getStringExtra(AppUtils.CHAMPION_ID)!!
-
-
-    }
-
-    override fun onStart() {
-        super.onStart()
-        if (!NetworkUtil.getConnectivityStatusString(applicationContext)
+    private fun Loadui(championId: String) {
+        if (!NetworkUtil.getConnectivityStatusString(requireContext())
                 .equals("Not connected to Internet")
         ) {
-            getChampionList()
+            getChampionList(championId)
         } else {
             championId.let { get(it) }
         }
     }
 
-    private fun getChampionList() {
+    private fun getChampionList(championId: String) {
         viewModel.getSubFarmerList(championId, AppUtils.SEASON_CODE)
-            .observe(this, {
+            .observe(requireActivity(), {
                 it.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
                             resource.data.let { users ->
                                 progessDialog.dismiss()
                                 if (users?.get(0)?.Error != null) {
-                                    AppUtils.showMessage(this, users[0].Error.toString())
+                                    AppUtils.showMessage(
+                                        requireContext(),
+                                        users[0].Error.toString()
+                                    )
                                 } else {
                                     users?.let { it1 -> reterive(it1) }
                                 }
@@ -88,11 +97,11 @@ class SubFarmerList : AppCompatActivity() {
                         }
                         Status.ERROR -> {
                             progessDialog.dismiss()
-                            AppUtils.showMessage(this, it.message)
+                            AppUtils.showMessage(requireContext(), it.message)
 
                         }
                         Status.LOADING -> {
-                            progessDialog = ProgressDialog(this)
+                            progessDialog = ProgressDialog(requireContext())
                             progessDialog.setMessage("Please Wait...")
                             progessDialog.show()
                         }
@@ -103,7 +112,7 @@ class SubFarmerList : AppCompatActivity() {
 
 
     private fun get(id: String) {
-        mfarmerviewModel.readAllSubFarmerByGroupId(id)!!.observe(this, Observer {
+        mfarmerviewModel.readAllSubFarmerByGroupId(id)!!.observe(viewLifecycleOwner, Observer {
             if (it != null) {
                 reterive(it)
             }
@@ -112,17 +121,12 @@ class SubFarmerList : AppCompatActivity() {
     }
 
     private fun reterive(users: List<FarmerDetails>) {
-        binding.recyclerView.visibility = View.VISIBLE
+        val layoutManager: RecyclerView.LayoutManager = LinearLayoutManager(requireContext())
+        _binding.recyclerView.layoutManager = layoutManager
+        _binding.recyclerView.visibility = View.VISIBLE
         UserArray = users
-        val adapter = SubFarmerAdaptor(users, this)
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.layoutManager = LinearLayoutManager(this)
+        val adapter = SubFarmerAdaptor(UserArray, requireContext())
+        _binding.recyclerView.adapter = adapter
         adapter.notifyDataSetChanged()
     }
-
-    override fun onSupportNavigateUp(): Boolean {
-        onBackPressed()
-        return true
-    }
-
 }

@@ -1,32 +1,34 @@
-package com.seeitgrow.supervisor.ui.main.view.LoginActivity
+package com.seeitgrow.supervisor.ui.NavTest
 
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
+import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.data.ApiViewModel.MainViewModel
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.data.api.ApiHelper
 import com.seeitgrow.supervisor.data.api.RetrofitBuilder
 import com.seeitgrow.supervisor.databinding.SignupLoginBinding
 import com.seeitgrow.supervisor.ui.base.ViewModelFactory
-import com.seeitgrow.supervisor.ui.main.view.ChampionList
 import com.seeitgrow.supervisor.ui.main.viewmodel.FarmerViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.RejectedViewModel
 import com.seeitgrow.supervisor.ui.main.viewmodel.Supervisor_ViewModel
 import com.seeitgrow.supervisor.utils.AppUtils
-import com.seeitgrow.supervisor.utils.AppUtils.SEASON_CODE
 import com.seeitgrow.supervisor.utils.NetworkUtil
 import com.seeitgrow.supervisor.utils.Status
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-@Suppress("DEPRECATION")
-class LoginActivity : AppCompatActivity() {
-
+class LoginFragment : Fragment() {
+    lateinit var navController: NavController
     lateinit var _binding: SignupLoginBinding
     private val viewModel: MainViewModel by viewModels {
         ViewModelFactory(ApiHelper(RetrofitBuilder.apiService))
@@ -37,29 +39,33 @@ class LoginActivity : AppCompatActivity() {
     private lateinit var progessDialog: ProgressDialog
     private var SupervisorId: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        _binding = SignupLoginBinding.inflate(inflater, container, false)
+        return _binding.root
+    }
 
-        _binding = SignupLoginBinding.inflate(layoutInflater)
-        setContentView(_binding.root)
-
-        val toolbar = _binding.toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar!!.setDisplayHomeAsUpEnabled(false)
-        supportActionBar!!.setDisplayShowTitleEnabled(false)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        navController = Navigation.findNavController(view)
 
         Loadui()
 
         _binding.btnProceed.setOnClickListener {
-            if (!NetworkUtil.getConnectivityStatusString(applicationContext)
+            if (!NetworkUtil.getConnectivityStatusString(requireContext())
                     .equals("Not connected to Internet")
             ) {
                 when {
                     _binding.edtMobileno.text.toString().isEmpty() -> {
-                        AppUtils.showMessage(this, "Mobile number cannot be blank")
+                        AppUtils.showMessage(requireContext(), "Mobile number cannot be blank")
                     }
                     _binding.edtMobileno.text.toString().length != 10 -> {
-                        AppUtils.showMessage(this, "Please Enter Complete Mobile Number")
+                        AppUtils.showMessage(
+                            requireContext(),
+                            "Please Enter Complete Mobile Number"
+                        )
                     }
                     else -> {
                         getSuperVisorDetails()
@@ -67,9 +73,10 @@ class LoginActivity : AppCompatActivity() {
                     }
                 }
             } else {
-                AppUtils.showMessage(this, "Not connected to Internet")
+                AppUtils.showMessage(requireContext(), "Not connected to Internet")
             }
         }
+
     }
 
     private fun Loadui() {
@@ -77,8 +84,8 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun getSuperVisorDetails() {
-        viewModel.getSupervisorDetails(_binding.edtMobileno.text.toString(), SEASON_CODE)
-            .observe(this, Observer {
+        viewModel.getSupervisorDetails(_binding.edtMobileno.text.toString(), AppUtils.SEASON_CODE)
+            .observe(requireActivity(), Observer {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -87,10 +94,13 @@ class LoginActivity : AppCompatActivity() {
 
                                     if (users[0].Error != null) {
                                         progessDialog.dismiss()
-                                        AppUtils.showMessage(this, users[0].Error.toString())
+                                        AppUtils.showMessage(
+                                            requireContext(),
+                                            users[0].Error.toString()
+                                        )
                                     } else {
                                         SupervisorId = users[0].SupervisorId
-                                        SharedPrefManager.getInstance(applicationContext)
+                                        SharedPrefManager.getInstance(requireContext())
                                             .saveSupervisorId(SupervisorId!!)
                                         mSupervisorViewModel.addUser(users)
                                         getFarmerDetails()
@@ -101,11 +111,11 @@ class LoginActivity : AppCompatActivity() {
                         }
                         Status.ERROR -> {
                             progessDialog.dismiss()
-                            AppUtils.showMessage(this, it.message)
+                            AppUtils.showMessage(requireContext(), it.message)
 
                         }
                         Status.LOADING -> {
-                            progessDialog = ProgressDialog(this)
+                            progessDialog = ProgressDialog(requireContext())
                             progessDialog.setMessage("Please Wait...")
                             progessDialog.show()
                         }
@@ -118,7 +128,7 @@ class LoginActivity : AppCompatActivity() {
     private fun getFarmerDetails() {
 
         SupervisorId?.let { it ->
-            viewModel.getFarmerList(it, SEASON_CODE).observe(this, Observer {
+            viewModel.getFarmerList(it, AppUtils.SEASON_CODE).observe(requireActivity(), Observer {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
@@ -129,7 +139,7 @@ class LoginActivity : AppCompatActivity() {
                         }
                         Status.ERROR -> {
                             progessDialog.dismiss()
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         }
                         Status.LOADING -> {
 
@@ -142,17 +152,18 @@ class LoginActivity : AppCompatActivity() {
 
     private fun getRejectedMessage() {
         SupervisorId?.let { _ ->
-            viewModel.getRejectedStatus(SEASON_CODE).observe(this, Observer {
+            viewModel.getRejectedStatus(AppUtils.SEASON_CODE).observe(requireActivity(), Observer {
                 it?.let { resource ->
                     when (resource.status) {
                         Status.SUCCESS -> {
                             progessDialog.dismiss()
                             resource.data?.let { it1 -> rejectedViewModel.addRejectedMessage(it1) }
-                            startActivity(Intent(this, ChampionList::class.java))
+//                            startActivity(Intent(this, ChampionList::class.java))
+                            navController.navigate(R.id.action_loginActivity_to_championList_Nav)
                         }
                         Status.ERROR -> {
                             progessDialog.dismiss()
-                            Toast.makeText(this, it.message, Toast.LENGTH_LONG).show()
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                         }
                         Status.LOADING -> {
 
@@ -162,16 +173,4 @@ class LoginActivity : AppCompatActivity() {
             })
         }
     }
-
-
-    override fun onBackPressed() {
-        super.onBackPressed()
-        val startMain = Intent(Intent.ACTION_MAIN)
-        startMain.addCategory(Intent.CATEGORY_HOME)
-        startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-        startActivity(startMain)
-    }
-
-
-
 }

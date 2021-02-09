@@ -2,12 +2,10 @@ package com.seeitgrow.supervisor.ui.main.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.content.Intent
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.appcompat.content.res.AppCompatResources
-import androidx.core.graphics.drawable.DrawableCompat
+import androidx.navigation.NavController
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -16,8 +14,6 @@ import com.seeitgrow.supervisor.Model.SiteListResponse
 import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.databinding.SitelistadapterViewBinding
-import com.seeitgrow.supervisor.ui.main.view.SiteDetails.RepeatPic_Approve
-import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteInitialApprove
 import com.seeitgrow.supervisor.utils.AppUtils
 
 
@@ -27,6 +23,7 @@ class SiteListAdaptor(
 ) :
     RecyclerView.Adapter<SiteListAdaptor.DataViewHolder>() {
     lateinit var binding: SitelistadapterViewBinding
+    lateinit var navController: NavController
 
     class DataViewHolder(private val binding: SitelistadapterViewBinding) :
         RecyclerView.ViewHolder(binding.root) {
@@ -47,7 +44,7 @@ class SiteListAdaptor(
 //                    val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
 //                    DrawableCompat.setTint(wrappedDrawable, Color.RED)
                     binding.imgNotification.setImageResource(R.drawable.notification_dot_red)
-                }else{
+                } else {
                     binding.imgNotification.setImageResource(R.drawable.notification_dot)
                 }
 
@@ -71,9 +68,13 @@ class SiteListAdaptor(
                     val json = gson.toJson(SiteDetail)
                     SharedPrefManager.getInstance(root.context).saveSiteId(json!!)
                     if (SiteDetail.InitialStatus.equals("0")) {
-                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
+//                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
+                        Navigation.findNavController(binding.root)
+                            .navigate(R.id.action_siteList_Fragment_to_siteImageApprove_Fragment)
                     } else {
-                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
+//                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
+                        Navigation.findNavController(binding.root)
+                            .navigate(R.id.action_siteList_Fragment_to_repeatPicApprove_Fragment)
                     }
                 }
 
