@@ -2,6 +2,7 @@ package com.seeitgrow.supervisor.ui.main.adapter
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.navigation.NavController
@@ -14,6 +15,8 @@ import com.seeitgrow.supervisor.Model.SiteListResponse
 import com.seeitgrow.supervisor.R
 import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.databinding.SitelistadapterViewBinding
+import com.seeitgrow.supervisor.ui.main.view.SiteDetails.RepeatPic_Approve
+import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteInitialApprove
 import com.seeitgrow.supervisor.utils.AppUtils
 
 
@@ -68,13 +71,13 @@ class SiteListAdaptor(
                     val json = gson.toJson(SiteDetail)
                     SharedPrefManager.getInstance(root.context).saveSiteId(json!!)
                     if (SiteDetail.InitialStatus.equals("0")) {
-//                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
-                        Navigation.findNavController(binding.root)
-                            .navigate(R.id.action_siteList_Fragment_to_siteImageApprove_Fragment)
+                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
+//                        Navigation.findNavController(binding.root)
+//                            .navigate(R.id.action_siteList_Fragment_to_siteImageApprove_Fragment)
                     } else {
-//                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
-                        Navigation.findNavController(binding.root)
-                            .navigate(R.id.action_siteList_Fragment_to_repeatPicApprove_Fragment)
+                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
+//                        Navigation.findNavController(binding.root)
+//                            .navigate(R.id.action_siteList_Fragment_to_repeatPicApprove_Fragment)
                     }
                 }
 

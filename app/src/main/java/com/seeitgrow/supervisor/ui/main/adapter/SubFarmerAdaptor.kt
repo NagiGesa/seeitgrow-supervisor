@@ -1,13 +1,13 @@
 package com.seeitgrow.supervisor.ui.main.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.databinding.FarmerListViewBinding
-import com.seeitgrow.supervisor.ui.NavTest.SubFarmerList_FragmentDirections
+import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteList_Activity
 import com.seeitgrow.supervisor.utils.AppUtils
 import com.seeitgrow.supervisor.utils.NetworkUtil
 
@@ -58,16 +58,16 @@ class SubFarmerAdaptor(
                     .equals("Not connected to Internet")
             ) {
                 val details = users[holder.adapterPosition]
-//                val intent = Intent(mContext, SiteList_Activity::class.java)
-//                intent.putExtra(AppUtils.FARMER_ID, details.FarmerID)
-//                intent.putExtra(AppUtils.FARMER_NAME, details.FirstName)
-//                mContext.startActivity(intent)
-                val action =
-                    SubFarmerList_FragmentDirections.actionSubFarmerFragmentToSiteListFragment(
-                        details.FarmerID!!,details.FirstName!!
-                    )
-
-                Navigation.findNavController(binding.root).navigate(action)
+                val intent = Intent(mContext, SiteList_Activity::class.java)
+                intent.putExtra(AppUtils.FARMER_ID, details.FarmerID)
+                intent.putExtra(AppUtils.FARMER_NAME, details.FirstName)
+                mContext.startActivity(intent)
+//                val action =
+//                    SubFarmerList_FragmentDirections.actionSubFarmerFragmentToSiteListFragment(
+//                        details.FarmerID!!,details.FirstName!!
+//                    )
+//
+//                Navigation.findNavController(binding.root).navigate(action)
             } else {
                 AppUtils.showMessage(mContext, "Not connected to Internet")
             }

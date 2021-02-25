@@ -36,16 +36,16 @@ class ChampionAdaptor(private val users: List<FarmerDetails>, private val mConte
                 binding.txtPendingCount.text = "Pending Count: ${currentNote.TotalPendingImage}"
 
                 binding.imgFrwd.setOnClickListener {
-//                    val intent = Intent(root.context, SubFarmerList::class.java)
-//                    intent.putExtra(CHAMPION_ID, currentNote.FarmerID)
-//                    root.context.startActivity(intent)
-
-                    val action =
-                        ChampionList_FragmentDirections.actionChampionListNavToSubFarmerFragment(
-                            currentNote.FarmerID!!
-                        )
-//        navController.navigate(R.id.action_championList_Nav_to_subFarmer_Fragment,action)
-                    Navigation.findNavController(binding.root).navigate(action)
+                    val intent = Intent(root.context, SubFarmerList::class.java)
+                    intent.putExtra(CHAMPION_ID, currentNote.FarmerID)
+                    root.context.startActivity(intent)
+//
+//                    val action =
+//                        ChampionList_FragmentDirections.actionChampionListNavToSubFarmerFragment(
+//                            currentNote.FarmerID!!
+//                        )
+////        navController.navigate(R.id.action_championList_Nav_to_subFarmer_Fragment,action)
+//                    Navigation.findNavController(binding.root).navigate(action)
                 }
 
                 binding.imgFarmerImage.load(let {
