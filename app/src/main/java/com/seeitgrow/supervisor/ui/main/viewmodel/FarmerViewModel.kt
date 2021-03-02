@@ -6,12 +6,16 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.seeitgrow.supervisor.DataBase.Model.FarmerDetails
 import com.seeitgrow.supervisor.DataBase.Repository.FarmerRepo
+import com.seeitgrow.supervisor.DataBase.Repository.RejectedRepo
+import com.seeitgrow.supervisor.DataBase.Repository.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class FarmerViewModel @ViewModelInject constructor(
-    private val repository: FarmerRepo
+    private val repository: FarmerRepo,
+    private val rejectedRepo: RejectedRepo,
+    private val userRepository: UserRepository,
 ) :
     ViewModel() {
 
@@ -35,6 +39,8 @@ class FarmerViewModel @ViewModelInject constructor(
     fun DeleteAll() {
         viewModelScope.launch(Dispatchers.IO) {
             repository.deleteFarmer()
+            userRepository.deleteAll()
+            rejectedRepo.deletRejected()
         }
     }
 }

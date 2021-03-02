@@ -123,6 +123,7 @@ class LoginActivity : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
 //                            progessDialog.dismiss()
+                            mfarmerviewModel.DeleteAll()
                             resource.data?.let { it1 -> mfarmerviewModel.addUser(it1) }
                             getRejectedMessage()
 //                            startActivity(Intent(this, ChampionList::class.java))
@@ -171,7 +172,6 @@ class LoginActivity : AppCompatActivity() {
         startMain.flags = Intent.FLAG_ACTIVITY_NEW_TASK
         startActivity(startMain)
     }
-
 
 
 }
