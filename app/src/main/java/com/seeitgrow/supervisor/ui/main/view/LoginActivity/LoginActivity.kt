@@ -73,7 +73,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun Loadui() {
-        _binding.edtMobileno.setText("9940395451")
+//        _binding.edtMobileno.setText("9940395451")
     }
 
     private fun getSuperVisorDetails() {

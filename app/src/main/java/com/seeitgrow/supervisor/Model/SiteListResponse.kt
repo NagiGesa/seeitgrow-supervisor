@@ -77,4 +77,10 @@ data class SiteListResponse(
     val RepeatApprovedOn: String? = null,
 
     val FatherName: String? = null,
+
+    val PendingInitialImage: String? = null,
+
+    val PendingRepeatImage: String? = null,
+
+    val PendingCloseUpImage: String? = null,
 )

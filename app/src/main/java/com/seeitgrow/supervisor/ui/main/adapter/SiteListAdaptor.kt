@@ -4,9 +4,9 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.NavController
-import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import coil.transform.CircleCropTransformation
@@ -36,19 +36,24 @@ class SiteListAdaptor(
             }
         }
 
+        @SuppressLint("SetTextI18n")
         fun bind(SiteDetail: SiteListResponse) {
             binding.apply {
                 binding.txtSiteName.text = SiteDetail.SiteName
-                binding.txtPendingCount.text = "Pending Count: " + SiteDetail.TotalPendingImage
+                binding.txtPendingCountInitial.text =
+                    "Initial Image Count: " + SiteDetail.PendingInitialImage
+                binding.txtPendingCountRepeat.text =
+                    "Repeat Image Count: " + SiteDetail.PendingRepeatImage
+                binding.txtPendingCountCloseUp.text =
+                    "CloseUp Image Count: " + SiteDetail.PendingCloseUpImage
 
                 if (SiteDetail.InitialStatus.equals("0")) {
-//                    val unwrappedDrawable =
-//                        AppCompatResources.getDrawable(root.context, R.drawable.notification_dot)
-//                    val wrappedDrawable = DrawableCompat.wrap(unwrappedDrawable!!)
-//                    DrawableCompat.setTint(wrappedDrawable, Color.RED)
-                    binding.imgNotification.setImageResource(R.drawable.notification_dot_red)
+                    binding.imgNotificationInitial.setImageResource(R.drawable.notification_dot_red)
+                    binding.linearRepeat.visibility = View.GONE
+                    binding.linearCloseup.visibility = View.GONE
                 } else {
-                    binding.imgNotification.setImageResource(R.drawable.notification_dot)
+                    binding.linearInitial.visibility = View.GONE
+                    binding.imgNotificationInitial.setImageResource(R.drawable.notification_dot)
                 }
 
                 val lat = SiteDetail.InitialLatitude
@@ -71,11 +76,21 @@ class SiteListAdaptor(
                     val json = gson.toJson(SiteDetail)
                     SharedPrefManager.getInstance(root.context).saveSiteId(json!!)
                     if (SiteDetail.InitialStatus.equals("0")) {
-                        root.context.startActivity(Intent(root.context, SiteInitialApprove::class.java))
+                        root.context.startActivity(
+                            Intent(
+                                root.context,
+                                SiteInitialApprove::class.java
+                            )
+                        )
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_siteList_Fragment_to_siteImageApprove_Fragment)
                     } else {
-                        root.context.startActivity(Intent(root.context, RepeatPic_Approve::class.java))
+                        root.context.startActivity(
+                            Intent(
+                                root.context,
+                                RepeatPic_Approve::class.java
+                            )
+                        )
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_siteList_Fragment_to_repeatPicApprove_Fragment)
                     }
