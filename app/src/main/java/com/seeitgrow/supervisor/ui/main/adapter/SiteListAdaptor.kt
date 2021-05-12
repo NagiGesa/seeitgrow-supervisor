@@ -3,6 +3,7 @@ package com.seeitgrow.supervisor.ui.main.adapter
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,6 +18,7 @@ import com.seeitgrow.supervisor.data.Storage.SharedPrefManager
 import com.seeitgrow.supervisor.databinding.SitelistadapterViewBinding
 import com.seeitgrow.supervisor.ui.main.view.SiteDetails.RepeatPic_Approve
 import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteInitialApprove
+import com.seeitgrow.supervisor.ui.main.view.SiteDetails.SiteList_Activity
 import com.seeitgrow.supervisor.utils.AppUtils
 
 
@@ -51,10 +53,18 @@ class SiteListAdaptor(
                     binding.imgNotificationInitial.setImageResource(R.drawable.notification_dot_red)
                     binding.linearRepeat.visibility = View.GONE
                     binding.linearCloseup.visibility = View.GONE
-                } else {
+                } else if(SiteDetail.InitialStatus.equals("1")){
                     binding.linearInitial.visibility = View.GONE
                     binding.imgNotificationInitial.setImageResource(R.drawable.notification_dot)
-                }
+                }else {
+                    binding.imgNotificationInitial.setImageResource(R.drawable.notification_dot_red)
+                    binding.linearRepeat.visibility = View.GONE
+                    binding.linearCloseup.visibility = View.GONE
+                    binding.imgNotificationInitial.visibility = View.GONE
+                    binding.txtPendingCountInitial.text = "Rejected"
+                    binding.txtPendingCountInitial.setTextColor(Color.parseColor("#FF0000"))
+
+            }
 
                 val lat = SiteDetail.InitialLatitude
                 val long = SiteDetail.InitialLongitude
@@ -84,7 +94,7 @@ class SiteListAdaptor(
                         )
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_siteList_Fragment_to_siteImageApprove_Fragment)
-                    } else {
+                    } else if(SiteDetail.InitialStatus.equals("1")){
                         root.context.startActivity(
                             Intent(
                                 root.context,
@@ -93,6 +103,8 @@ class SiteListAdaptor(
                         )
 //                        Navigation.findNavController(binding.root)
 //                            .navigate(R.id.action_siteList_Fragment_to_repeatPicApprove_Fragment)
+                    }else{
+
                     }
                 }
 

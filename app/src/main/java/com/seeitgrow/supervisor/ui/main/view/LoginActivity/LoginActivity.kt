@@ -89,6 +89,7 @@ class LoginActivity : AppCompatActivity() {
                                         progessDialog.dismiss()
                                         AppUtils.showMessage(this, users[0].Error.toString())
                                     } else {
+                                        mfarmerviewModel.DeleteAll()
                                         SupervisorId = users[0].SupervisorId
                                         SharedPrefManager.getInstance(applicationContext)
                                             .saveSupervisorId(SupervisorId!!)
@@ -123,7 +124,6 @@ class LoginActivity : AppCompatActivity() {
                     when (resource.status) {
                         Status.SUCCESS -> {
 //                            progessDialog.dismiss()
-                            mfarmerviewModel.DeleteAll()
                             resource.data?.let { it1 -> mfarmerviewModel.addUser(it1) }
                             getRejectedMessage()
 //                            startActivity(Intent(this, ChampionList::class.java))
