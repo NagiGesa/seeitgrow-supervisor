@@ -15,9 +15,9 @@ android {
         applicationId "com.seeitgrow.supervisor"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 2
+        versionCode 3
         multiDexEnabled true
-        versionName "1.1"
+        versionName "1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildFeatures {
